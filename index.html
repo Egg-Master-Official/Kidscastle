@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#050505">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Danat Alkhair Restaurant | Premium Arabic & Indian Cuisine</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0a;
+            --gold-primary: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8943f;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a8a8a8;
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-top: var(--safe-area-top);
+            padding-bottom: var(--safe-area-bottom);
+        }
+
+        .font-display {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+        }
+
+        /* iOS Safari 100vh Fix */
+        @supports (height: 100dvh) {
+            .hero-section {
+                height: 100dvh;
+            }
+        }
+
+        /* Custom Scrollbar - Desktop only */
+        @media (pointer: fine) {
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+            ::-webkit-scrollbar-track {
+                background: var(--bg-secondary);
+            }
+            ::-webkit-scrollbar-thumb {
+                background: var(--gold-dark);
+                border-radius: 3px;
+            }
+        }
+
+        /* Gold gradient text */
+        .gold-text {
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 168, 83, 0.15);
+        }
+
+        /* Premium button */
+        .btn-premium {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 50%, var(--gold-light) 100%);
+            color: #0a0a0a;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 20px rgba(212, 168, 83, 0.25);
+        }
+
+        .btn-premium:active {
+            transform: scale(0.97);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gold-primary);
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: 1px solid var(--gold-primary);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline:active {
+            background: rgba(212, 168, 83, 0.15);
+            transform: scale(0.97);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background: 
+                linear-gradient(180deg, 
+                    rgba(5, 5, 5, 0.2) 0%, 
+                    rgba(5, 5, 5, 0.5) 50%,
+                    var(--bg-primary) 100%
+                ),
+                url('https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&q=80') center center / cover no-repeat;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, var(--bg-primary) 75%);
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatUp 18s infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1);
+            }
+        }
+
+        /* Reveal animations */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal-section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Menu Card */
+        .menu-card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(18, 18, 18, 0.95) 0%, rgba(8, 8, 8, 0.98) 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 168, 83, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .menu-card:active {
+            transform: scale(0.98);
+        }
+
+        @media (hover: hover) {
+            .menu-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 50px rgba(212, 168, 83, 0.1);
+                border-color: rgba(212, 168, 83, 0.2);
+            }
+        }
+
+        .menu-card-image {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .menu-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        @media (hover: hover) {
+            .menu-card:hover .menu-card-image img {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Category Tabs */
+        .category-tab {
+            padding: 10px 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            -webkit-appearance: none;
+            touch-action: manipulation;
+            min-height: 44px;
+        }
+
+        .category-tab:active {
+            background: rgba(212, 168, 83, 0.1);
+        }
+
+        .category-tab.active {
+            color: var(--gold-primary);
+            background: rgba(212, 168, 83, 0.1);
+        }
+
+        /* Feature Card */
+        .feature-card {
+            padding: 24px 16px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(15, 15, 15, 0.7) 0%, rgba(8, 8, 8, 0.9) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 168, 83, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        @media (hover: hover) {
+            .feature-card:hover {
+                border-color: rgba(212, 168, 83, 0.2);
+                transform: translateY(-4px);
+            }
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.15) 0%, rgba(212, 168, 83, 0.05) 100%);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+        }
+
+        /* Gallery */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:active img {
+            transform: scale(1.05);
+        }
+
+        @media (hover: hover) {
+            .gallery-item:hover img {
+                transform: scale(1.12);
+            }
+            .gallery-item:hover .gallery-overlay {
+                opacity: 1;
+            }
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(5, 5, 5, 0.9) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 16px;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 20px;
+            padding-top: calc(16px + var(--safe-area-top));
+            transition: all 0.3s ease;
+        }
+
+        .nav-container.scrolled {
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 168, 83, 0.1);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+            padding: 8px 0;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        @media (hover: hover) {
+            .nav-link:hover {
+                color: var(--gold-primary);
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(85%, 320px);
+            height: 100%;
+            height: 100dvh;
+            background: linear-gradient(180deg, rgba(12, 12, 12, 0.99) 0%, rgba(5, 5, 5, 0.99) 100%);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            z-index: 2000;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 100px 32px 40px;
+            border-left: 1px solid rgba(212, 168, 83, 0.15);
+            overflow-y: auto;
+            padding-top: calc(100px + var(--safe-area-top));
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-link {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            padding: 12px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu-link:active {
+            color: var(--gold-primary);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 5, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+            padding-top: calc(20px + var(--safe-area-top));
+            padding-bottom: calc(20px + var(--safe-area-bottom));
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: calc(16px + var(--safe-area-top));
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:active {
+            background: var(--gold-primary);
+            border-color: var(--gold-primary);
+        }
+
+        /* Sticky CTA - Desktop */
+        .sticky-cta {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (min-width: 769px) {
+            .sticky-cta {
+                display: flex;
+            }
+        }
+
+        .sticky-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .sticky-btn:active {
+            transform: scale(0.95);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+        }
+
+        .call-btn {
+            background: var(--gold-primary);
+        }
+
+        /* Mobile Bottom Bar */
+        .mobile-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            padding: 12px 16px;
+            padding-bottom: calc(12px + var(--safe-area-bottom));
+            background: linear-gradient(180deg, transparent, rgba(5, 5, 5, 0.98) 30%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        @media (min-width: 769px) {
+            .mobile-bottom-bar {
+                display: none;
+            }
+        }
+
+        /* Corner decorations */
+        .corner-decoration {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(212, 168, 83, 0.2);
+            pointer-events: none;
+        }
+
+        @media (min-width: 768px) {
+            .corner-decoration {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        .corner-decoration.top-left {
+            top: 16px;
+            left: 16px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.top-right {
+            top: 16px;
+            right: 16px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.bottom-left {
+            bottom: 16px;
+            left: 16px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: 16px;
+            right: 16px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Divider */
+        .gold-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            margin: 0 auto;
+        }
+
+        /* Price tag */
+        .price-tag {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Menu tabs scrollable */
+        .tabs-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px;
+            margin: 0 -6px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabs-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .reveal-section {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* Hamburger menu icon */
+        .hamburger {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container" id="navbar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#hero" class="flex items-center gap-2">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #b8943f, #d4a853, #e8c878);">
+                    <span class="font-display text-lg md:text-xl font-bold text-black">D</span>
+                </div>
+                <div>
+                    <h1 class="font-display text-base md:text-xl font-semibold text-white">Danat Alkhair</h1>
+                    <p class="text-xs text-gray-500 tracking-widest uppercase hidden sm:block">Restaurant</p>
+                </div>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#menu" class="nav-link">Menu</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#location" class="nav-link">Location</a>
+                <a href="https://wa.me/96512345678" target="_blank" rel="noopener" class="btn-premium text-sm">Order Now</a>
+            </div>
+
+            <button class="hamburger md:hidden" id="menuToggle" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="absolute top-4 right-4 w-11 h-11 flex items-center justify-center rounded-full bg-white/5" id="menuClose" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="flex flex-col gap-4">
+            <a href="#menu" class="mobile-menu-link">Menu</a>
+            <a href="#about" class="mobile-menu-link">About</a>
+            <a href="#gallery" class="mobile-menu-link">Gallery</a>
+            <a href="#location" class="mobile-menu-link">Location</a>
+            <div class="h-px bg-gray-800 my-3"></div>
+            <a href="https://wa.me/96512345678" target="_blank" rel="noopener" class="btn-premium text-center">Order Now</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-overlay"></div>
+        
+        <!-- Particles -->
+        <div id="particles" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none;"></div>
+        
+        <!-- Corner decorations -->
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+        
+        <div class="relative z-10 text-center px-5 max-w-4xl mx-auto">
+            <div id="heroBadge" style="animation: fadeInUp 0.8s 0.2s both;">
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-600/30 bg-black/50 backdrop-blur-sm mb-5">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-xs md:text-sm text-yellow-500 font-medium">Open 24/7 in Salmiya, Kuwait</span>
+                </span>
+            </div>
+            
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-5 leading-tight" id="heroTitle" style="animation: fadeInUp 0.8s 0.4s both;">
+                Experience Authentic<br>
+                <span class="gold-text">Taste of Kuwait</span>
+            </h1>
+            
+            <p class="text-base md:text-lg text-gray-400 mb-8 max-w-xl mx-auto" id="heroSubtitle" style="animation: fadeInUp 0.8s 0.6s both;">
+                Premium Arabic & Indian Cuisine crafted with passion. A culinary journey awaits you.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-3 justify-center" id="heroCTA" style="animation: fadeInUp 0.8s 0.8s both;">
+                <a href="https://wa.me/96512345678?text=Hi,%20I%20want%20to%20order%20food" target="_blank" rel="noopener" class="btn-premium">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Order Now
+                </a>
+                <a href="#menu" class="btn-outline">
+                    <span>View Menu</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2" style="animation: fadeIn 1s 1.2s both;">
+            <div class="flex flex-col items-center gap-2 text-gray-500">
+                <span class="text-xs tracking-widest uppercase hidden md:block">Scroll</span>
+                <div class="w-5 h-8 border border-gray-600 rounded-full flex justify-center">
+                    <div class="w-1 h-2 bg-yellow-500 rounded-full mt-2 animate-bounce"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section (About) -->
+    <section class="py-16 md:py-20 px-4 md:px-6 reveal-section" id="about">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-10 md:mb-14">
+                <span class="text-yellow-500 text-xs md:text-sm tracking-widest uppercase mb-3 block">Why Choose Us</span>
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold mb-3">The Danat Experience</h2>
+                <div class="gold-divider"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-5">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-base md:text-lg font-semibold mb-1">Open 24/7</h3>
+                    <p class="text-xs md:text-sm text-gray-500">Always here for you</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-base md:text-lg font-semibold mb-1">Fast Delivery</h3>
+                    <p class="text-xs md:text-sm text-gray-500">Hot food at your door</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-base md:text-lg font-semibold mb-1">Family Friendly</h3>
+                    <p class="text-xs md:text-sm text-gray-500">Perfect for gatherings</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-base md:text-lg font-semibold mb-1">Multi-Cuisine</h3>
+                    <p class="text-xs md:text-sm text-gray-500">Arabic & Indian</p>
+                </div>
+                
+                <div class="feature-card col-span-2 sm:col-span-1">
+                    <div class="feature-icon">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-base md:text-lg font-semibold mb-1">Premium Quality</h3>
+                    <p class="text-xs md:text-sm text-gray-500">Finest ingredients</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="py-16 md:py-20 px-4 md:px-6 reveal-section" id="menu">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8 md:mb-12">
+                <span class="text-yellow-500 text-xs md:text-sm tracking-widest uppercase mb-3 block">Our Specialties</span>
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold mb-3">Curated Menu</h2>
+                <div class="gold-divider"></div>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="mb-8 md:mb-10">
+                <div class="tabs-scroll" id="categoryTabs">
+                    <button class="category-tab active" data-category="popular">Popular</button>
+                    <button class="category-tab" data-category="starters">Starters</button>
+                    <button class="category-tab" data-category="main">Main Course</button>
+                    <button class="category-tab" data-category="rice">Rice</button>
+                    <button class="category-tab" data-category="fastfood">Fast Food</button>
+                    <button class="category-tab" data-category="desserts">Desserts</button>
+                    <button class="category-tab" data-category="drinks">Drinks</button>
+                </div>
+            </div>
+            
+            <!-- Menu Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5" id="menuGrid"></div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-16 md:py-20 px-4 md:px-6 reveal-section" id="gallery">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8 md:mb-12">
+                <span class="text-yellow-500 text-xs md:text-sm tracking-widest uppercase mb-3 block">Visual Journey</span>
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold mb-3">Our Gallery</h2>
+                <div class="gold-divider"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4" id="galleryGrid"></div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="py-16 md:py-20 px-4 md:px-6 reveal-section" id="location">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-8 md:mb-12">
+                <span class="text-yellow-500 text-xs md:text-sm tracking-widest uppercase mb-3 block">Find Us</span>
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold mb-3">Our Location</h2>
+                <div class="gold-divider"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div class="glass-card p-6 md:p-8 rounded-xl">
+                    <div class="flex items-start gap-3 mb-5">
+                        <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(212, 168, 83, 0.1); border: 1px solid rgba(212, 168, 83, 0.2);">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-lg font-semibold mb-1">Danat Alkhair Restaurant</h3>
+                            <p class="text-gray-400 text-sm">Hamad Al-Mubarak Street, Salmiya, Kuwait</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3 mb-5">
+                        <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(212, 168, 83, 0.1); border: 1px solid rgba(212, 168, 83, 0.2);">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-lg font-semibold mb-1">Opening Hours</h3>
+                            <p class="text-gray-400 text-sm">Open 24 Hours, 7 Days a Week</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3 mb-6">
+                        <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(212, 168, 83, 0.1); border: 1px solid rgba(212, 168, 83, 0.2);">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.5">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-lg font-semibold mb-1">Contact</h3>
+                            <p class="text-gray-400 text-sm">+965 1234 5678</p>
+                        </div>
+                    </div>
+                    
+                    <a href="https://maps.google.com/?q=Salmiya,Kuwait" target="_blank" rel="noopener" class="btn-premium w-full">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Get Directions
+                    </a>
+                </div>
+                
+                <div class="relative rounded-xl overflow-hidden h-64 md:h-80">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27763.744845966883!2d48.0451!3d29.3375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf9e96c5b6a5d5%3A0x4b4b4b4b4b4b4b4b!2sSalmiya%2C%20Kuwait!5e0!3m2!1sen!2s!4v1234567890"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" 
+                        allowfullscreen=""
+                        loading="lazy"
+                        title="Restaurant Location"
+                    ></iframe>
+                    <div class="absolute inset-0 pointer-events-none rounded-xl" style="border: 1px solid rgba(212, 168, 83, 0.15);"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-20 px-4 md:px-6 reveal-section" id="contact">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card p-8 md:p-12 rounded-2xl text-center relative overflow-hidden">
+                <!-- Background glow -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 md:w-96 h-64 md:h-96 rounded-full blur-3xl" style="background: rgba(212, 168, 83, 0.08);"></div>
+                
+                <div class="relative z-10">
+                    <span class="text-yellow-500 text-xs md:text-sm tracking-widest uppercase mb-3 block">Ready to Order?</span>
+                    <h2 class="font-display text-2xl md:text-4xl lg:text-5xl font-semibold mb-4">Experience Premium Dining</h2>
+                    <p class="text-gray-400 mb-8 max-w-lg mx-auto text-sm md:text-base">
+                        Order now and get your favorite dishes delivered hot to your doorstep.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="https://wa.me/96512345678?text=Hi,%20I%20want%20to%20order%20food%20from%20Danat%20Alkhair%20Restaurant" target="_blank" rel="noopener" class="btn-premium">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Order via WhatsApp
+                        </a>
+                        <a href="tel:+96512345678" class="btn-outline">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            Call Now
+                        </a>
+                    </div>
+                    
+                    <p class="mt-5 text-sm text-yellow-500/80">
+                        Order in 30 seconds - Fast Delivery Guaranteed
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 px-4 md:px-6" style="border-top: 1px solid rgba(128, 128, 128, 0.15); padding-bottom: calc(40px + var(--safe-area-bottom) + 70px);">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-5">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #b8943f, #d4a853);">
+                        <span class="font-display text-base font-bold text-black">D</span>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-base font-semibold">Danat Alkhair</h3>
+                        <p class="text-xs text-gray-500">Premium Arabic & Indian Cuisine</p>
+                    </div>
+                </div>
+                
+                <p class="text-xs text-gray-600 text-center">
+                    2024 Danat Alkhair Restaurant. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky CTA Buttons - Desktop Only -->
+    <div class="sticky-cta">
+        <a href="https://wa.me/96512345678?text=Hi,%20I%20want%20to%20order%20food" target="_blank" rel="noopener" class="sticky-btn whatsapp-btn" aria-label="Order on WhatsApp">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </a>
+        <a href="tel:+96512345678" class="sticky-btn call-btn" aria-label="Call us">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- Mobile Bottom Bar -->
+    <div class="mobile-bottom-bar">
+        <div class="flex gap-3">
+            <a href="https://wa.me/96512345678?text=Hi,%20I%20want%20to%20order%20food" target="_blank" rel="noopener" class="btn-premium flex-1 text-sm">
+                Order Now
+            </a>
+            <a href="tel:+96512345678" class="btn-outline flex-1 text-sm">
+                Call Us
+            </a>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <img src="" alt="Gallery image" id="lightboxImage">
+    </div>
+
+    <script>
+        // Menu Data
+        const menuData = {
+            popular: [
+                { name: 'Chicken Shawarma', desc: 'Tender grilled chicken with garlic sauce', price: '1.500 KD', image: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400&q=80' },
+                { name: 'Mix Grill Platter', desc: 'Premium grilled meats with rice', price: '4.500 KD', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80' },
+                { name: 'Chicken Biryani', desc: 'Aromatic basmati rice with chicken', price: '2.500 KD', image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80' },
+                { name: 'Butter Chicken', desc: 'Creamy tomato curry with chicken', price: '2.750 KD', image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&q=80' },
+                { name: 'Lamb Kofta', desc: 'Seasoned lamb skewers grilled', price: '3.000 KD', image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80' }
+            ],
+            starters: [
+                { name: 'Hummus with Pita', desc: 'Creamy chickpea dip with bread', price: '1.000 KD', image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=400&q=80' },
+                { name: 'Moutabel', desc: 'Smoky eggplant dip with tahini', price: '1.250 KD', image: 'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=400&q=80' },
+                { name: 'Sambousek', desc: 'Crispy pastries with spiced meat', price: '1.500 KD', image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&q=80' },
+                { name: 'Kibbeh', desc: 'Traditional croquettes with meat', price: '1.750 KD', image: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?w=400&q=80' }
+            ],
+            main: [
+                { name: 'Shish Taouk', desc: 'Marinated chicken skewers', price: '2.500 KD', image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80' },
+                { name: 'Grilled Chicken', desc: 'Whole chicken grilled perfectly', price: '3.500 KD', image: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&q=80' },
+                { name: 'Dal Tadka', desc: 'Yellow lentils with spices', price: '1.750 KD', image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&q=80' },
+                { name: 'Butter Chicken', desc: 'Creamy tomato curry', price: '2.750 KD', image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&q=80' }
+            ],
+            rice: [
+                { name: 'Chicken Biryani', desc: 'Aromatic rice with chicken', price: '2.500 KD', image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80' },
+                { name: 'Mutton Biryani', desc: 'Premium lamb biryani', price: '3.250 KD', image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&q=80' },
+                { name: 'Shrimp Murabyan', desc: 'Kuwaiti-style shrimp rice', price: '4.000 KD', image: 'https://images.unsplash.com/photo-1630443031138-dca0d5bd4fe3?w=400&q=80' }
+            ],
+            fastfood: [
+                { name: 'Pizza', desc: 'Classic pizza with toppings', price: '2.000 KD', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80' },
+                { name: 'Burger', desc: 'Juicy beef burger', price: '1.750 KD', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80' },
+                { name: 'Pasta', desc: 'Italian pasta with sauce', price: '1.500 KD', image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80' },
+                { name: 'Club Sandwich', desc: 'Triple-decker sandwich', price: '1.500 KD', image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&q=80' }
+            ],
+            desserts: [
+                { name: 'Kunafa', desc: 'Arabic pastry with cheese', price: '1.750 KD', image: 'https://images.unsplash.com/photo-1579888944880-d98341245702?w=400&q=80' },
+                { name: 'Umm Ali', desc: 'Bread pudding with nuts', price: '1.500 KD', image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80' },
+                { name: 'Cheesecake', desc: 'New York style cheesecake', price: '1.750 KD', image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&q=80' }
+            ],
+            drinks: [
+                { name: 'Fresh Juice', desc: 'Seasonal fruit juice', price: '0.750 KD', image: 'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400&q=80' },
+                { name: 'Karak Tea', desc: 'Kuwaiti spiced tea', price: '0.250 KD', image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&q=80' },
+                { name: 'Arabic Coffee', desc: 'Traditional coffee', price: '0.500 KD', image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&q=80' }
+            ]
+        };
+
+        // Gallery Images
+        const galleryImages = [
+            'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80',
+            'https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600&q=80',
+            'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80',
+            'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&q=80',
+            'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600&q=80',
+            'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80',
+            'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80',
+            'https://images.unsplash.com/photo-1579888944880-d98341245702?w=600&q=80'
+        ];
+
+        // DOM Elements - Initialize after DOM ready
+        let menuGrid = null;
+        let galleryGrid = null;
+        let categoryTabs = null;
+        let lightbox = null;
+        let lightboxImage = null;
+        let navbar = null;
+        let heroBg = null;
+        let mobileMenu = null;
+        let mobileOverlay = null;
+        let menuToggle = null;
+        let menuClose = null;
+        let particlesContainer = null;
+        let lightboxClose = null;
+
+        // Initialize DOM elements
+        function initDOMElements() {
+            menuGrid = document.getElementById('menuGrid');
+            galleryGrid = document.getElementById('galleryGrid');
+            categoryTabs = document.getElementById('categoryTabs');
+            lightbox = document.getElementById('lightbox');
+            lightboxImage = document.getElementById('lightboxImage');
+            navbar = document.getElementById('navbar');
+            heroBg = document.getElementById('heroBg');
+            mobileMenu = document.getElementById('mobileMenu');
+            mobileOverlay = document.getElementById('mobileOverlay');
+            menuToggle = document.getElementById('menuToggle');
+            menuClose = document.getElementById('menuClose');
+            particlesContainer = document.getElementById('particles');
+            lightboxClose = document.getElementById('lightboxClose');
+        }
+
+        // Render Menu Items
+        function renderMenu(category) {
+            if (!menuGrid) return;
+            const items = menuData[category] || [];
+            menuGrid.innerHTML = items.map((item, index) => `
+                <div class="menu-card" style="animation: fadeInUp 0.5s ${index * 0.08}s both;">
+                    <div class="menu-card-image">
+                        <img src="${item.image}" alt="${item.name}" loading="lazy">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-display text-base md:text-lg font-semibold">${item.name}</h3>
+                            <span class="price-tag font-semibold text-base md:text-lg">${item.price}</span>
+                        </div>
+                        <p class="text-xs md:text-sm text-gray-500">${item.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Gallery
+        function renderGallery() {
+            if (!galleryGrid) return;
+            galleryGrid.innerHTML = galleryImages.map((img, index) => `
+                <div class="gallery-item" data-src="${img}" style="animation: fadeIn 0.5s ${index * 0.08}s both;">
+                    <img src="${img}" alt="Gallery image ${index + 1}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                            <path d="M11 8v6M8 11h6"/>
+                        </svg>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click/tap handlers for gallery
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const src = this.getAttribute('data-src');
+                    if (lightbox && lightboxImage && src) {
+                        lightboxImage.src = src;
+                        lightbox.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+        }
+
+        // Create Particles
+        function createParticles() {
+            if (!particlesContainer) return;
+            const particleCount = window.innerWidth < 768 ? 15 : 25;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 18 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Close lightbox
+        function closeLightbox() {
+            if (lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close mobile menu
+        function closeMobileMenu() {
+            if (mobileMenu && mobileOverlay) {
+                mobileMenu.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Open mobile menu
+        function openMobileMenu() {
+            if (mobileMenu && mobileOverlay) {
+                mobileMenu.classList.add('active');
+                mobileOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize DOM elements
+            initDOMElements();
+
+            // Render content
+            renderMenu('popular');
+            renderGallery();
+            createParticles();
+
+            // Category Tab Click Handlers - FIXED
+            if (categoryTabs) {
+                categoryTabs.addEventListener('click', function(e) {
+                    const tab = e.target.closest('.category-tab');
+                    if (tab) {
+                        // Remove active class from all tabs
+                        document.querySelectorAll('.category-tab').forEach(function(t) {
+                            t.classList.remove('active');
+                        });
+                        // Add active class to clicked tab
+                        tab.classList.add('active');
+                        // Render menu for selected category
+                        const category = tab.getAttribute('data-category');
+                        if (category) {
+                            renderMenu(category);
+                        }
+                    }
+                });
+            }
+
+            // Lightbox Close - FIXED
+            if (lightbox) {
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === lightbox || e.target.closest('.lightbox-close')) {
+                        closeLightbox();
+                    }
+                });
+            }
+
+            if (lightboxClose) {
+                lightboxClose.addEventListener('click', closeLightbox);
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
+                if (navbar) {
+                    if (scrollY > 80) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                }
+
+                // Parallax effect (desktop only)
+                if (heroBg && window.innerWidth > 768) {
+                    heroBg.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
+                }
+            }, { passive: true });
+
+            // Mobile Menu - FIXED
+            if (menuToggle) {
+                menuToggle.addEventListener('click', openMobileMenu);
+            }
+            if (menuClose) {
+                menuClose.addEventListener('click', closeMobileMenu);
+            }
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', closeMobileMenu);
+            }
+
+            // Close mobile menu on link click - FIXED
+            if (mobileMenu) {
+                mobileMenu.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', closeMobileMenu);
+                });
+            }
+
+            // Section Reveal with IntersectionObserver
+            const revealSections = document.querySelectorAll('.reveal-section');
+            const revealObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { 
+                threshold: 0.1, 
+                rootMargin: '0px 0px -50px 0px' 
+            });
+
+            revealSections.forEach(function(section) {
+                revealObserver.observe(section);
+            });
+
+            // Keyboard navigation - FIXED
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (lightbox && lightbox.classList.contains('active')) {
+                        closeLightbox();
+                    }
+                    if (mobileMenu && mobileMenu.classList.contains('active')) {
+                        closeMobileMenu();
+                    }
+                }
+            });
+
+            // Touch swipe to close mobile menu
+            let touchStartX = 0;
+            if (mobileMenu) {
+                mobileMenu.addEventListener('touchstart', function(e) {
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+
+                mobileMenu.addEventListener('touchmove', function(e) {
+                    const touchX = e.touches[0].clientX;
+                    const diff = touchX - touchStartX;
+                    if (diff > 50) {
+                        closeMobileMenu();
+                    }
+                }, { passive: true });
+            }
+        });
+    </script>
+</body>
+</html>
