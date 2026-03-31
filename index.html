@@ -1,1485 +1,1016 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tasty World Cafeteria | Premium Dining Experience</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Desert Crown — Wear Your Heritage</title>
+    <meta name="description" content="Premium luxury Keffiyeh fashion brand. Handcrafted Arabic-style printed keffiyehs for the modern gentleman.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0a'/><path d='M8 22L6 12l3 3 4-5 4 5 3-3-2 10z' fill='%23D4AF37' stroke='%23D4AF37' stroke-width='.5'/><rect x='6' y='22' width='20' height='2' rx='1' fill='%23D4AF37'/></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { 400: '#FFCC33', 500: '#D4AF37', 600: '#B8960E', 700: '#8C7200' },
+                        dark: { 300: '#151515', 400: '#111111', 500: '#0d0d0d', 600: '#0a0a0a', 700: '#070707' }
+                    },
+                    fontFamily: { display: ['Playfair Display','serif'], body: ['Poppins','sans-serif'] }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg: #0B0B0B;
-            --bg-secondary: #111111;
-            --fg: #FAF8F5;
-            --muted: #8A8A8A;
-            --accent: #C9A96E;
-            --accent-light: #E5D4B3;
-            --card: rgba(20, 20, 20, 0.8);
-            --border: rgba(201, 169, 110, 0.2);
-            --glass: rgba(201, 169, 110, 0.05);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--fg);
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        @media (pointer: coarse) {
-            body { cursor: auto; }
-            .custom-cursor { display: none !important; }
-        }
-
-        .font-display {
-            font-family: 'Cinzel', serif;
-        }
-
-        /* Custom Cursor */
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.15s ease, background 0.15s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .custom-cursor.hover {
-            transform: translate(-50%, -50%) scale(2);
-            background: rgba(201, 169, 110, 0.1);
-        }
-
-        .cursor-dot {
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10001;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Smooth Scroll */
-        .smooth-scroll {
-            scroll-behavior: smooth;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes pulse-gold {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4); }
-            50% { box-shadow: 0 0 30px 10px rgba(201, 169, 110, 0.1); }
-        }
-
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-5%, -10%); }
-            20% { transform: translate(-15%, 5%); }
-            30% { transform: translate(7%, -25%); }
-            40% { transform: translate(-5%, 25%); }
-            50% { transform: translate(-15%, 10%); }
-            60% { transform: translate(15%, 0%); }
-            70% { transform: translate(0%, 15%); }
-            80% { transform: translate(3%, 35%); }
-            90% { transform: translate(-10%, 10%); }
-        }
-
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(60px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-        .stagger-5 { transition-delay: 0.5s; }
-
-        @media (prefers-reduced-motion: reduce) {
-            .animate-on-scroll {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-            @keyframes fadeInUp {
-                from, to { opacity: 1; transform: none; }
-            }
-        }
-
-        /* Hero Background Animation */
-        .hero-bg {
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(201, 169, 110, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(20, 20, 20, 1) 0%, var(--bg) 100%);
-        }
-
-        /* Noise Overlay */
-        .noise-overlay::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            animation: grain 8s steps(10) infinite;
-        }
-
-        /* Glass Card */
-        .glass-card {
-            background: var(--card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .glass-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(201, 169, 110, 0.1);
-        }
-
-        /* Button Styles */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent) 0%, #B8964F 100%);
-            color: var(--bg);
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 1rem 2.5rem;
-            border: none;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 40px rgba(201, 169, 110, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 1rem 2.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: var(--accent);
-            color: var(--bg);
-        }
-
-        /* Menu Tabs */
-        .menu-tab {
-            padding: 1rem 2rem;
-            color: var(--muted);
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .menu-tab::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .menu-tab:hover, .menu-tab.active {
-            color: var(--accent);
-        }
-
-        .menu-tab.active::after {
-            width: 100%;
-        }
-
-        /* Menu Item */
-        .menu-item {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .menu-item:hover {
-            background: var(--glass);
-            padding-left: 2rem;
-        }
-
-        .menu-item:hover .item-name {
-            color: var(--accent);
-        }
-
-        .chef-badge {
-            background: linear-gradient(135deg, var(--accent) 0%, #B8964F 100%);
-            color: var(--bg);
-            font-size: 0.65rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 2px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            animation: pulse-gold 2s infinite;
-        }
-
-        /* Gallery */
-        .gallery-item {
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gallery-item img {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        /* Testimonial Card */
-        .testimonial-card {
-            background: linear-gradient(135deg, var(--card) 0%, rgba(30, 30, 30, 0.8) 100%);
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            font-family: 'Cinzel', serif;
-            font-size: 6rem;
-            color: var(--accent);
-            opacity: 0.1;
-            position: absolute;
-            top: 0;
-            left: 1rem;
-            line-height: 1;
-        }
-
-        /* Floating Button */
-        .floating-btn {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Logo */
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent) 0%, #B8964F 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            background: var(--bg);
-            border-radius: 50%;
-        }
-
-        .logo-icon svg {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Navigation */
-        .nav-link {
-            position: relative;
-            padding: 0.5rem 0;
-            color: var(--fg);
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--accent);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Form Inputs */
-        .form-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            padding: 1rem 1.5rem;
-            color: var(--fg);
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
-        }
-
-        .form-input::placeholder {
-            color: var(--muted);
-        }
-
-        /* Stars */
-        .star {
-            color: var(--accent);
-        }
-
-        /* Lightbox */
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .lightbox.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90vh;
-            object-fit: contain;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .lightbox.active img {
-            transform: scale(1);
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
-
-        /* Section Divider */
-        .section-divider {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            margin: 1.5rem auto;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 9998;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0);
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Poppins',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hidden}
+        ::selection{background:#D4AF37;color:#0a0a0a}
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:#0a0a0a}
+        ::-webkit-scrollbar-thumb{background:#D4AF37;border-radius:3px}
+
+        #loader{position:fixed;inset:0;z-index:9999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column}
+        .loader-logo-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;transform:translateY(20px)}
+        .loader-text{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#D4AF37;letter-spacing:10px}
+        .loader-line{width:0;height:1px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
+
+        #header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 40px;transition:all .5s cubic-bezier(.4,0,.2,1)}
+        #header.scrolled{background:rgba(10,10,10,.95);backdrop-filter:blur(20px);padding:14px 40px;border-bottom:1px solid rgba(212,175,55,.1)}
+        .nav-link{position:relative;color:rgba(255,255,255,.7);transition:color .3s;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:500}
+        .nav-link:hover,.nav-link.active{color:#D4AF37}
+        .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#D4AF37;transition:width .3s}
+        .nav-link:hover::after,.nav-link.active::after{width:100%}
+        .cart-badge{position:absolute;top:-6px;right:-8px;width:18px;height:18px;background:#D4AF37;color:#0a0a0a;font-size:10px;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+        /* SVG LOGO STYLES */
+        .logo-svg{transition:all .4s ease}
+        .logo-svg:hover{filter:drop-shadow(0 0 12px rgba(212,175,55,.5))}
+        .logo-svg .crown-body{fill:#D4AF37;transition:all .4s}
+        .logo-svg .crown-gem{fill:#0a0a0a}
+        .logo-svg .crown-base{fill:#D4AF37}
+        .logo-svg .crown-accent{fill:none;stroke:#B8960E;stroke-width:.8}
+        .logo-text{font-family:'Playfair Display',serif;color:#D4AF37;letter-spacing:5px;font-weight:600;transition:all .4s}
+        .logo-subtext{font-family:'Poppins',sans-serif;color:rgba(255,255,255,.4);letter-spacing:4px;font-size:8px;text-transform:uppercase;font-weight:400;transition:all .4s}
+
+        #mobile-menu{position:fixed;inset:0;z-index:999;background:rgba(10,10,10,.98);backdrop-filter:blur(30px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s}
+        #mobile-menu.open{opacity:1;pointer-events:all}
+        .mobile-nav-link{font-family:'Playfair Display',serif;font-size:36px;color:#fff;display:block;padding:16px 0;opacity:0;transform:translateY(30px);transition:all .4s;cursor:pointer}
+        #mobile-menu.open .mobile-nav-link{opacity:1;transform:translateY(0)}
+        .mobile-nav-link:hover{color:#D4AF37}
+
+        .btn-gold{background:linear-gradient(135deg,#D4AF37,#B8960E);color:#0a0a0a;padding:16px 48px;font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;border:none;cursor:pointer;position:relative;overflow:hidden;transition:all .4s;font-family:'Poppins',sans-serif}
+        .btn-gold:hover{box-shadow:0 0 40px rgba(212,175,55,.4),0 0 80px rgba(212,175,55,.15);transform:translateY(-2px)}
+        .btn-gold::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .6s}
+        .btn-gold:hover::before{left:100%}
+        .btn-outline{border:1px solid rgba(212,175,55,.5);color:#D4AF37;padding:14px 40px;font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;background:transparent;cursor:pointer;transition:all .4s;font-family:'Poppins',sans-serif}
+        .btn-outline:hover{background:rgba(212,175,55,.1);border-color:#D4AF37}
+
+        .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+        .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.3) 0%,rgba(10,10,10,.5) 50%,rgba(10,10,10,.97) 100%)}
+        .hero-text{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,96px);font-weight:700;line-height:1;letter-spacing:-2px}
+        .hero-sub{font-size:clamp(14px,2vw,18px);letter-spacing:8px;text-transform:uppercase;font-weight:300}
+
+        .section-label{font-size:11px;letter-spacing:6px;text-transform:uppercase;color:#D4AF37;font-weight:500}
+        .section-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:700;line-height:1.1}
+
+        .parallax-section{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+        .parallax-bg{position:absolute;inset:-10%;background-size:cover;background-position:center;background-repeat:no-repeat;will-change:transform}
+
+        .product-card{position:relative;overflow:hidden;cursor:pointer}
+        .product-card .card-img{transition:transform .8s cubic-bezier(.4,0,.2,1);width:100%;height:100%;object-fit:cover}
+        .product-card:hover .card-img{transform:scale(1.08)}
+        .product-card .card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.9) 0%,transparent 60%);opacity:0;transition:opacity .5s}
+        .product-card:hover .card-overlay{opacity:1}
+        .product-card .card-actions{position:absolute;bottom:80px;left:0;right:0;display:flex;justify-content:center;opacity:0;transform:translateY(20px);transition:all .5s .1s}
+        .product-card:hover .card-actions{opacity:1;transform:translateY(0)}
+        .card-add-btn{background:#D4AF37;color:#0a0a0a;border:none;padding:12px 32px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .3s}
+        .card-add-btn:hover{background:#fff}
+
+        .gallery-item{overflow:hidden;position:relative}
+        .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.4,0,.2,1);filter:brightness(.8)}
+        .gallery-item:hover img{transform:scale(1.1);filter:brightness(1)}
+
+        .feature-icon{width:60px;height:60px;border:1px solid rgba(212,175,55,.3);display:flex;align-items:center;justify-content:center;color:#D4AF37;transition:all .4s}
+        .feature-icon:hover{background:rgba(212,175,55,.1);border-color:#D4AF37;transform:scale(1.1)}
+
+        #toast-container{position:fixed;top:100px;right:20px;z-index:9998;display:flex;flex-direction:column;gap:10px}
+        .toast{padding:16px 24px;border-radius:4px;font-size:14px;font-weight:500;transform:translateX(120%);transition:transform .4s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(20px);max-width:360px}
+        .toast.show{transform:translateX(0)}
+        .toast-success{background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.3);color:#D4AF37}
+        .toast-error{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+        .toast-info{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff}
+
+        .page{display:none;min-height:100vh}
+        .page.active{display:block}
+
+        .zoom-container{overflow:hidden;cursor:zoom-in}
+        .zoom-container img{transition:transform .6s ease}
+        .zoom-container:hover img{transform:scale(1.15)}
+
+        .form-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:16px 20px;color:#fff;font-family:'Poppins',sans-serif;font-size:14px;transition:all .3s;outline:none}
+        .form-input:focus{border-color:#D4AF37;box-shadow:0 0 0 2px rgba(212,175,55,.1)}
+        .form-input::placeholder{color:rgba(255,255,255,.3)}
+        .form-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px;display:block;font-weight:500}
+
+        .cart-item{border-bottom:1px solid rgba(255,255,255,.06);padding:24px 0;transition:all .3s}
+        .cart-item:hover{background:rgba(255,255,255,.02)}
+        .qty-btn{width:36px;height:36px;border:1px solid rgba(255,255,255,.15);background:transparent;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .3s}
+        .qty-btn:hover{border-color:#D4AF37;color:#D4AF37}
+
+        .gold-divider{width:60px;height:1px;background:linear-gradient(90deg,#D4AF37,transparent)}
+        .reveal{opacity:0;transform:translateY(40px)}
+        .reveal-left{opacity:0;transform:translateX(-40px)}
+        .reveal-right{opacity:0;transform:translateX(40px)}
+        .reveal-scale{opacity:0;transform:scale(.95)}
+        .fabric-texture::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(212,175,55,.02) 3px,rgba(212,175,55,.02) 6px);pointer-events:none;mix-blend-mode:overlay}
+
+        .promo-banner{position:relative;overflow:hidden}
+        .promo-banner img{width:100%;height:100%;object-fit:cover;filter:brightness(.5);transition:all .8s}
+        .promo-banner:hover img{filter:brightness(.6);transform:scale(1.03)}
+
+        @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+        .gold-shimmer{background:linear-gradient(90deg,#D4AF37 0%,#FFE699 25%,#D4AF37 50%,#B8960E 75%,#D4AF37 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 4s linear infinite}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        @keyframes crownFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(1deg)}}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content}
+        @keyframes gemPulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+        @media(max-width:768px){
+            #header{padding:14px 20px}
+            #header.scrolled{padding:12px 20px}
+            .desktop-nav{display:none!important}
+            .mobile-toggle{display:flex!important}
+            .hero-text{letter-spacing:-1px}
+            .btn-gold{padding:14px 32px;font-size:11px}
+            .section-title{font-size:clamp(28px,6vw,48px)}
+            .logo-text{font-size:14px!important;letter-spacing:3px!important}
+            .logo-subtext{display:none}
+        }
+        @media(min-width:769px){
+            .mobile-toggle{display:none!important}
         }
     </style>
 </head>
-<body class="smooth-scroll">
-    <!-- Custom Cursor -->
-    <div class="custom-cursor"></div>
-    <div class="cursor-dot"></div>
+<body>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/97450000000" target="_blank" class="floating-btn hidden md:flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-all hover:scale-105">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        <span class="text-sm font-medium">Book Now</span>
-    </a>
+<!-- ============ STYLISH CROWN SVG LOGO (reusable) ============ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+        <symbol id="crown-logo" viewBox="0 0 60 50">
+            <!-- Crown Shadow -->
+            <ellipse cx="30" cy="44" rx="22" ry="3" fill="rgba(212,175,55,0.15)"/>
+            <!-- Crown Base Band -->
+            <rect x="8" y="35" width="44" height="5" rx="2" class="crown-base"/>
+            <!-- Crown Body -->
+            <path d="M10 35 L6 14 L16 24 L24 8 L30 20 L36 8 L44 24 L54 14 L50 35 Z" class="crown-body"/>
+            <!-- Crown Inner Detail Lines -->
+            <path d="M14 33 L18 20 M22 33 L25 16 M30 33 L30 22 M38 33 L35 16 M46 33 L42 20" stroke="#B8960E" stroke-width="0.6" fill="none" opacity="0.5"/>
+            <!-- Center Gem -->
+            <circle cx="30" cy="25" r="3.5" fill="#0a0a0a" stroke="#FFCC33" stroke-width="1"/>
+            <circle cx="30" cy="25" r="1.5" fill="#D4AF37" style="animation:gemPulse 2s ease-in-out infinite"/>
+            <!-- Side Gems -->
+            <circle cx="18" cy="27" r="2" fill="#0a0a0a" stroke="#D4AF37" stroke-width=".7"/>
+            <circle cx="18" cy="27" r=".8" fill="#D4AF37" style="animation:gemPulse 2s ease-in-out infinite .3s"/>
+            <circle cx="42" cy="27" r="2" fill="#0a0a0a" stroke="#D4AF37" stroke-width=".7"/>
+            <circle cx="42" cy="27" r=".8" fill="#D4AF37" style="animation:gemPulse 2s ease-in-out infinite .6s"/>
+            <!-- Top Points Accents -->
+            <circle cx="6" cy="14" r="1.5" fill="#D4AF37"/>
+            <circle cx="24" cy="8" r="1.5" fill="#D4AF37"/>
+            <circle cx="30" cy="20" r="0" fill="#D4AF37"/>
+            <circle cx="36" cy="8" r="1.5" fill="#D4AF37"/>
+            <circle cx="54" cy="14" r="1.5" fill="#D4AF37"/>
+            <!-- Outer Glow Line -->
+            <path d="M10 35 L6 14 L16 24 L24 8 L30 20 L36 8 L44 24 L54 14 L50 35" fill="none" stroke="rgba(255,204,51,0.3)" stroke-width="0.5"/>
+        </symbol>
+    </defs>
+</svg>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <!-- Logo -->
-                <a href="#" class="flex items-center gap-3">
-                    <div class="logo-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.5">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="font-display text-lg font-semibold tracking-wider text-[var(--fg)]">TASTY WORLD</h1>
-                        <p class="text-[0.65rem] tracking-[0.3em] text-[var(--muted)]">CAFETERIA</p>
-                    </div>
-                </a>
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-logo-wrap">
+        <svg class="logo-svg" width="64" height="50" style="animation:crownFloat 3s ease-in-out infinite"><use href="#crown-logo"/></svg>
+        <div class="loader-text">DESERT CROWN</div>
+    </div>
+    <div class="loader-line"></div>
+</div>
 
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#home" class="nav-link text-sm tracking-wider">Home</a>
-                    <a href="#about" class="nav-link text-sm tracking-wider">About</a>
-                    <a href="#menu" class="nav-link text-sm tracking-wider">Menu</a>
-                    <a href="#gallery" class="nav-link text-sm tracking-wider">Gallery</a>
-                    <a href="#contact" class="nav-link text-sm tracking-wider">Contact</a>
-                </div>
+<div id="toast-container"></div>
 
-                <!-- Reserve Button -->
-                <div class="hidden md:block">
-                    <a href="#reservation" class="btn-primary text-xs rounded-sm">Reserve Table</a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" id="menuToggle">
-                    <span class="w-6 h-0.5 bg-[var(--accent)] transition-all origin-center"></span>
-                    <span class="w-6 h-0.5 bg-[var(--accent)] transition-all"></span>
-                    <span class="w-6 h-0.5 bg-[var(--accent)] transition-all origin-center"></span>
-                </button>
-            </div>
+<div id="mobile-menu">
+    <div style="text-align:center">
+        <div style="margin-bottom:40px">
+            <svg class="logo-svg" width="48" height="38"><use href="#crown-logo"/></svg>
         </div>
-    </nav>
+        <a class="mobile-nav-link" onclick="navigateTo('home');closeMobile()">Home</a>
+        <a class="mobile-nav-link" onclick="navigateTo('shop');closeMobile()">Collection</a>
+        <a class="mobile-nav-link" onclick="navigateTo('cart');closeMobile()">Cart</a>
+        <p style="font-size:11px;color:rgba(255,255,255,.2);letter-spacing:6px;margin-top:40px;font-family:'Poppins',sans-serif">DESERT CROWN</p>
+    </div>
+</div>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu md:hidden" id="mobileMenu">
-        <div class="flex flex-col items-center justify-center h-full gap-8">
-            <a href="#home" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Home</a>
-            <a href="#about" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">About</a>
-            <a href="#menu" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Menu</a>
-            <a href="#gallery" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Gallery</a>
-            <a href="#contact" class="font-display text-2xl tracking-wider text-[var(--fg)] hover:text-[var(--accent)] transition-colors mobile-link">Contact</a>
-            <a href="#reservation" class="btn-primary text-sm rounded-sm mt-4">Reserve Table</a>
+<!-- HEADER -->
+<header id="header">
+    <div class="flex items-center justify-between max-w-[1400px] mx-auto">
+        <a onclick="navigateTo('home')" class="cursor-pointer flex items-center gap-3">
+            <svg class="logo-svg" width="38" height="30"><use href="#crown-logo"/></svg>
+            <div class="hidden sm:block flex flex-col">
+                <span class="logo-text text-sm">DESERT CROWN</span>
+                <span class="logo-subtext">Luxury Keffiyeh</span>
+            </div>
+        </a>
+        <nav class="desktop-nav flex items-center gap-10">
+            <a class="nav-link cursor-pointer" onclick="navigateTo('home')" data-page="home">Home</a>
+            <a class="nav-link cursor-pointer" onclick="navigateTo('shop')" data-page="shop">Collection</a>
+            <a class="nav-link cursor-pointer" onclick="navigateTo('cart')" data-page="cart">Cart</a>
+        </nav>
+        <div class="flex items-center gap-5">
+            <button onclick="navigateTo('cart')" class="relative p-2 text-white/70 hover:text-gold-500 transition-colors">
+                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                <span id="cart-badge" class="cart-badge" style="display:none">0</span>
+            </button>
+            <button class="mobile-toggle flex-col items-center justify-center gap-1.5 p-2 cursor-pointer" onclick="toggleMobile()">
+                <span class="block w-6 h-[1px] bg-white/70 transition-all" id="ham-1"></span>
+                <span class="block w-4 h-[1px] bg-white/70 transition-all" id="ham-2"></span>
+                <span class="block w-6 h-[1px] bg-white/70 transition-all" id="ham-3"></span>
+            </button>
         </div>
     </div>
+</header>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center hero-bg noise-overlay overflow-hidden">
-        <!-- Animated Background Elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--accent)] opacity-5 rounded-full blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[var(--accent)] opacity-5 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+<main id="app">
+
+<!-- ==================== HOME ==================== -->
+<div id="page-home" class="page active">
+
+    <!-- HERO -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="hero-bg" style="background-image:url('https://i.ibb.co/602tDCP1/shop-main-gate.jpg')"></div>
+        <div class="hero-overlay"></div>
+        <div class="relative z-10 text-center px-6" style="max-width:900px">
+            <div class="hero-anim" style="opacity:0;transform:translateY(20px);margin-bottom:20px">
+                <svg class="logo-svg mx-auto" width="56" height="44" style="filter:drop-shadow(0 0 20px rgba(212,175,55,.4))"><use href="#crown-logo"/></svg>
+            </div>
+            <p class="hero-sub text-gold-500 mb-6 hero-anim" style="opacity:0;transform:translateY(20px)">Crafted for Royalty</p>
+            <h1 class="hero-text text-white mb-8 hero-anim" style="opacity:0;transform:translateY(30px)">Wear Your<br><span class="gold-shimmer">Heritage</span></h1>
+            <p class="text-white/50 text-base md:text-lg font-light max-w-lg mx-auto mb-10 hero-anim" style="opacity:0;transform:translateY(20px)">Where ancient Arabic artistry meets contemporary luxury fashion</p>
+            <button class="btn-gold hero-anim" style="opacity:0;transform:translateY(20px)" onclick="navigateTo('shop')">Explore Collection</button>
         </div>
-
-        <!-- Floating Particles -->
-        <div class="absolute inset-0 pointer-events-none" id="particles"></div>
-
-        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
-            <div class="animate-on-scroll stagger-1">
-                <p class="text-[var(--accent)] tracking-[0.4em] text-xs md:text-sm mb-6 uppercase">Premium Dining Experience</p>
-            </div>
-            
-            <h1 class="font-display text-4xl md:text-6xl lg:text-8xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-2">
-                An Experience<br>
-                <span class="text-[var(--accent)]">Beyond Dining</span>
-            </h1>
-            
-            <p class="text-[var(--muted)] text-lg md:text-xl tracking-wide mb-12 animate-on-scroll stagger-3">
-                Where Taste Meets Elegance
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll stagger-4">
-                <a href="#reservation" class="btn-primary rounded-sm">Reserve a Table</a>
-                <a href="#menu" class="btn-secondary rounded-sm">View Menu</a>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-                <div class="w-6 h-10 border-2 border-[var(--accent)] rounded-full flex items-start justify-center p-2">
-                    <div class="w-1 h-2 bg-[var(--accent)] rounded-full animate-pulse"></div>
-                </div>
-            </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 hero-anim" style="opacity:0">
+            <span class="text-white/30 text-[10px] tracking-[4px] uppercase">Scroll</span>
+            <div class="w-[1px] h-8 bg-gradient-to-b from-gold-500 to-transparent" style="animation:float 2s ease-in-out infinite"></div>
         </div>
-
-        <!-- Decorative Lines -->
-        <div class="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-[var(--accent)] to-transparent opacity-20"></div>
-        <div class="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-[var(--accent)] to-transparent opacity-20"></div>
     </section>
 
-    <!-- Signature Experience Section -->
-    <section id="about" class="py-24 md:py-32 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <!-- Image Side -->
-                <div class="relative animate-on-scroll">
-                    <div class="aspect-[4/5] relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-[#8B7355] opacity-20 rounded-sm"></div>
-                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=750&fit=crop" alt="Chef preparing dish" class="w-full h-full object-cover rounded-sm">
-                        <div class="absolute -bottom-6 -right-6 w-48 h-48 border border-[var(--accent)] rounded-sm opacity-50"></div>
-                    </div>
-                    <!-- Stats -->
-                    <div class="absolute -bottom-8 -left-8 glass-card p-6 rounded-sm">
-                        <div class="text-4xl font-display text-[var(--accent)] font-semibold">15+</div>
-                        <p class="text-sm text-[var(--muted)] mt-1">Years of Excellence</p>
-                    </div>
+    <!-- MARQUEE -->
+    <section class="py-5 border-y border-white/5 overflow-hidden">
+        <div class="marquee-track">
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Desert Crown</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Premium Keffiyehs</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Handcrafted in Oman</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Arabic Geometric Prints</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Luxury Fabrics</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Desert Crown</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Premium Keffiyehs</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Handcrafted in Oman</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Arabic Geometric Prints</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+            <span class="text-white/10 text-sm tracking-[8px] uppercase whitespace-nowrap mx-12">Luxury Fabrics</span>
+            <span class="text-gold-500/20 text-sm whitespace-nowrap mx-8">♛</span>
+        </div>
+    </section>
+
+    <!-- BRAND STORY -->
+    <section class="py-32 md:py-40 px-6">
+        <div class="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 md:gap-24 items-center">
+            <div class="reveal-left">
+                <span class="section-label">Our Story</span>
+                <div class="gold-divider mt-4 mb-6"></div>
+                <h2 class="section-title text-white mb-8">A Legacy Woven<br>in <span class="text-gold-500 italic">Gold</span></h2>
+                <p class="text-white/40 font-light leading-relaxed mb-6">Born in the heart of the Arabian Peninsula, Desert Crown reimagines the timeless keffiyeh as a statement of modern luxury. Each piece carries the weight of generations — the geometric patterns of our ancestors, reinterpreted through the lens of haute couture.</p>
+                <p class="text-white/40 font-light leading-relaxed mb-10">Our artisans spend over 40 hours on each creation, hand-printing intricate Arabic geometric motifs onto the finest fabrics sourced from the world's most prestigious mills.</p>
+                <button class="btn-outline" onclick="navigateTo('shop')">Discover More</button>
+            </div>
+            <div class="reveal-right relative">
+                <div class="relative overflow-hidden aspect-[3/4]">
+                    <img src="https://i.ibb.co/ZRsbPJSB/product-1.jpg" alt="Brand Story" class="w-full h-full object-cover" loading="lazy" style="filter:brightness(.85) contrast(1.1)">
+                    <div class="fabric-texture absolute inset-0"></div>
                 </div>
+                <div class="absolute -bottom-6 -left-6 w-32 h-32 border border-gold-500/20"></div>
+                <div class="absolute -top-6 -right-6 w-24 h-24 border border-gold-500/10"></div>
+            </div>
+        </div>
+    </section>
 
-                <!-- Content Side -->
-                <div class="lg:pl-8">
-                    <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">OUR STORY</p>
-                    <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
-                        A Legacy of<br>Culinary Excellence
-                    </h2>
-                    <div class="section-divider !mx-0 animate-on-scroll stagger-2"></div>
-                    
-                    <p class="text-[var(--muted)] leading-relaxed mb-6 animate-on-scroll stagger-3">
-                        At Tasty World Cafeteria, we believe dining is an art form. Our master chefs craft each dish with precision, using only the finest ingredients sourced from trusted suppliers across the globe.
-                    </p>
-                    <p class="text-[var(--muted)] leading-relaxed mb-8 animate-on-scroll stagger-4">
-                        From our signature healthy juices to our exquisite Spanish and Italian fusion dishes, every creation tells a story of passion, tradition, and innovation.
-                    </p>
+    <!-- VISUAL SHOWCASE 1 -->
+    <section class="parallax-section">
+        <div class="parallax-bg" style="background-image:url('https://i.ibb.co/qFxM2Nmw/product-4.jpg')"></div>
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative z-10 text-center px-6 reveal-scale">
+            <svg class="logo-svg mx-auto mb-6" width="40" height="32" style="opacity:.6"><use href="#crown-logo"/></svg>
+            <h2 class="font-display text-white text-5xl md:text-7xl font-bold mb-6 italic">"Every Thread Tells a Story"</h2>
+            <p class="text-white/40 max-w-md mx-auto font-light">Hand-printed Arabic geometric patterns on fabrics that breathe luxury</p>
+        </div>
+    </section>
 
-                    <!-- Features -->
-                    <div class="grid grid-cols-2 gap-6 mb-8 animate-on-scroll stagger-5">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                                    <path d="M2 17l10 5 10-5"/>
-                                    <path d="M2 12l10 5 10-5"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-sm">Premium Quality</h4>
-                                <p class="text-xs text-[var(--muted)] mt-1">Finest ingredients only</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M12 6v6l4 2"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-sm">Fast Service</h4>
-                                <p class="text-xs text-[var(--muted)] mt-1">Quick & elegant</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-sm">Made with Love</h4>
-                                <p class="text-xs text-[var(--muted)] mt-1">Passion in every dish</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-sm">Prime Location</h4>
-                                <p class="text-xs text-[var(--muted)] mt-1">Heart of the city</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="#menu" class="btn-secondary rounded-sm inline-block animate-on-scroll stagger-5">Explore Menu</a>
+    <!-- FEATURES -->
+    <section class="py-32 md:py-40 px-6">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="text-center mb-20 reveal">
+                <span class="section-label">Why Desert Crown</span>
+                <div class="gold-divider mx-auto mt-4 mb-6"></div>
+                <h2 class="section-title text-white">The Pinnacle of <span class="text-gold-500 italic">Excellence</span></h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+                <div class="text-center reveal" style="transition-delay:.1s">
+                    <div class="feature-icon mx-auto mb-5"><i data-lucide="gem" class="w-6 h-6"></i></div>
+                    <h4 class="text-white text-sm font-semibold tracking-wider uppercase mb-3">Premium Fabric</h4>
+                    <p class="text-white/30 text-xs font-light leading-relaxed">Egyptian cotton and Italian silk blends for unmatched comfort</p>
+                </div>
+                <div class="text-center reveal" style="transition-delay:.2s">
+                    <div class="feature-icon mx-auto mb-5"><i data-lucide="hand-metal" class="w-6 h-6"></i></div>
+                    <h4 class="text-white text-sm font-semibold tracking-wider uppercase mb-3">Handcrafted</h4>
+                    <p class="text-white/30 text-xs font-light leading-relaxed">40+ hours of artisan dedication in every single piece</p>
+                </div>
+                <div class="text-center reveal" style="transition-delay:.3s">
+                    <div class="feature-icon mx-auto mb-5"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
+                    <h4 class="text-white text-sm font-semibold tracking-wider uppercase mb-3">Authentic Design</h4>
+                    <p class="text-white/30 text-xs font-light leading-relaxed">Original Arabic geometric patterns rooted in heritage</p>
+                </div>
+                <div class="text-center reveal" style="transition-delay:.4s">
+                    <div class="feature-icon mx-auto mb-5"><i data-lucide="globe" class="w-6 h-6"></i></div>
+                    <h4 class="text-white text-sm font-semibold tracking-wider uppercase mb-3">Global Shipping</h4>
+                    <p class="text-white/30 text-xs font-light leading-relaxed">White-glove delivery to 50+ countries worldwide</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Interactive Menu Section -->
-    <section id="menu" class="py-24 md:py-32 relative bg-[var(--bg-secondary)]">
-        <div class="absolute inset-0 noise-overlay"></div>
-        
-        <div class="relative z-10 max-w-7xl mx-auto px-6">
+    <!-- VISUAL SHOWCASE 2 -->
+    <section class="parallax-section">
+        <div class="parallax-bg" style="background-image:url('https://i.ibb.co/JFCpyjBR/product-6.jpg')"></div>
+        <div class="absolute inset-0 bg-black/65"></div>
+        <div class="relative z-10 text-center px-6 reveal-scale">
+            <span class="section-label">Heritage</span>
+            <h2 class="font-display text-white text-5xl md:text-7xl font-bold mt-4 mb-6">Rooted in Tradition</h2>
+            <p class="text-white/40 max-w-lg mx-auto font-light">Inspired by the architectural wonders and geometric mastery of the Arab world</p>
+        </div>
+    </section>
+
+    <!-- PROMOTIONAL BANNER 1 -->
+    <section class="promo-banner relative h-[60vh] md:h-[70vh] reveal-scale">
+        <img src="https://i.ibb.co/v6ymfb9y/rendom-add.jpg" alt="Promotion" loading="lazy" class="absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+        <div class="relative z-10 flex items-center h-full px-8 md:px-20">
+            <div class="max-w-lg">
+                <span class="section-label">New Arrival</span>
+                <h2 class="font-display text-white text-3xl md:text-5xl font-bold mt-4 mb-4">Exclusive<br><span class="text-gold-500 italic">Arabic Prints</span></h2>
+                <p class="text-white/40 font-light mb-8 max-w-sm">Limited run of hand-printed geometric keffiyehs — each one numbered and certified</p>
+                <button class="btn-gold" onclick="navigateTo('shop')">Shop Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIFESTYLE GALLERY -->
+    <section class="py-32 md:py-40 px-6">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="section-label">Gallery</span>
+                <div class="gold-divider mx-auto mt-4 mb-6"></div>
+                <h2 class="section-title text-white">The <span class="text-gold-500 italic">Lifestyle</span></h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-1 reveal" style="height:500px">
+                <div class="gallery-item col-span-2 row-span-2"><img src="https://i.ibb.co/zTXz0J2d/product-2.jpg" alt="Gallery" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/Wpt0h0Hn/product-3.jpg" alt="Gallery" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/Vc95vHb6/product-5.jpg" alt="Gallery" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/k2pgjsk6/Product-7.jpg" alt="Gallery" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/spMf0ptY/product-8.jpg" alt="Gallery" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMOTIONAL BANNER 2 -->
+    <section class="promo-banner relative h-[50vh] md:h-[60vh] reveal-scale">
+        <img src="https://i.ibb.co/2Y5m8926/rendom-add1.jpg" alt="Promotion" loading="lazy" class="absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-l from-black/80 via-black/50 to-transparent"></div>
+        <div class="relative z-10 flex items-center justify-end h-full px-8 md:px-20">
+            <div class="max-w-lg text-right">
+                <span class="section-label">Ramadan Collection</span>
+                <h2 class="font-display text-white text-3xl md:text-5xl font-bold mt-4 mb-4">Gift of<br><span class="text-gold-500 italic">Elegance</span></h2>
+                <p class="text-white/40 font-light mb-8 max-w-sm ml-auto">The perfect luxury gift for someone who appreciates heritage and craftsmanship</p>
+                <button class="btn-outline" onclick="navigateTo('shop')">View Gifts</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="relative py-32 md:py-40 px-6 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-dark-600 via-dark-500 to-dark-600"></div>
+        <div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(212,175,55,.08) 0%,transparent 70%)"></div>
+        <div class="relative z-10 text-center max-w-2xl mx-auto reveal">
+            <svg class="logo-svg mx-auto mb-6" width="48" height="38" style="filter:drop-shadow(0 0 15px rgba(212,175,55,.3))"><use href="#crown-logo"/></svg>
+            <span class="section-label">Limited Edition</span>
+            <h2 class="font-display text-white text-4xl md:text-6xl font-bold mt-4 mb-6">Upgrade Your<br><span class="text-gold-500 italic">Style</span></h2>
+            <p class="text-white/40 font-light mb-10 max-w-md mx-auto">Join the elite circle of gentlemen who wear their heritage with pride and distinction</p>
+            <button class="btn-gold" onclick="navigateTo('shop')">Shop Now</button>
+        </div>
+    </section>
+
+</div>
+
+<!-- ==================== SHOP ==================== -->
+<div id="page-shop" class="page">
+    <section class="pt-32 pb-8 px-6">
+        <div class="max-w-[1400px] mx-auto text-center mb-4">
+            <svg class="logo-svg mx-auto mb-4" width="36" height="28" style="opacity:.5"><use href="#crown-logo"/></svg>
+            <span class="section-label">Our Collection</span>
+            <div class="gold-divider mx-auto mt-4 mb-6"></div>
+            <h1 class="section-title text-white">Premium <span class="text-gold-500 italic">Keffiyehs</span></h1>
+            <p class="text-white/30 font-light mt-4 max-w-lg mx-auto">Each piece is a unique work of art — hand-printed Arabic geometric designs on the world's finest fabrics</p>
+        </div>
+    </section>
+    <section class="pb-32 px-6">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+                <button class="filter-btn px-6 py-2 text-xs tracking-[3px] uppercase font-medium border border-white/10 bg-transparent text-white/50 cursor-pointer transition-all hover:border-gold-500 hover:text-gold-500" data-filter="all" onclick="filterProducts('all')">All</button>
+                <button class="filter-btn px-6 py-2 text-xs tracking-[3px] uppercase font-medium border border-white/10 bg-transparent text-white/50 cursor-pointer transition-all hover:border-gold-500 hover:text-gold-500" data-filter="premium" onclick="filterProducts('premium')">Premium</button>
+                <button class="filter-btn px-6 py-2 text-xs tracking-[3px] uppercase font-medium border border-white/10 bg-transparent text-white/50 cursor-pointer transition-all hover:border-gold-500 hover:text-gold-500" data-filter="classic" onclick="filterProducts('classic')">Classic</button>
+                <button class="filter-btn px-6 py-2 text-xs tracking-[3px] uppercase font-medium border border-white/10 bg-transparent text-white/50 cursor-pointer transition-all hover:border-gold-500 hover:text-gold-500" data-filter="limited" onclick="filterProducts('limited')">Limited Edition</button>
+            </div>
+            <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== PRODUCT DETAIL ==================== -->
+<div id="page-product" class="page">
+    <section class="pt-32 pb-32 px-6" id="product-detail-content"></section>
+</div>
+
+<!-- ==================== CART ==================== -->
+<div id="page-cart" class="page">
+    <section class="pt-32 pb-32 px-6">
+        <div class="max-w-[1100px] mx-auto">
             <div class="text-center mb-16">
-                <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">CULINARY OFFERINGS</p>
-                <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
-                    Our Menu
-                </h2>
-                <div class="section-divider animate-on-scroll stagger-2"></div>
+                <svg class="logo-svg mx-auto mb-4" width="36" height="28" style="opacity:.5"><use href="#crown-logo"/></svg>
+                <span class="section-label">Shopping Bag</span>
+                <div class="gold-divider mx-auto mt-4 mb-6"></div>
+                <h1 class="section-title text-white">Your <span class="text-gold-500 italic">Cart</span></h1>
             </div>
+            <div id="cart-content"></div>
+        </div>
+    </section>
+</div>
 
-            <!-- Menu Tabs -->
-            <div class="flex flex-wrap justify-center gap-2 md:gap-0 mb-12 animate-on-scroll stagger-3 overflow-x-auto pb-4">
-                <button class="menu-tab active font-display text-sm tracking-wider whitespace-nowrap" data-category="juices">Fresh Juices</button>
-                <button class="menu-tab font-display text-sm tracking-wider whitespace-nowrap" data-category="wraps">Wraps & Sandwiches</button>
-                <button class="menu-tab font-display text-sm tracking-wider whitespace-nowrap" data-category="burgers">Burgers</button>
-                <button class="menu-tab font-display text-sm tracking-wider whitespace-nowrap" data-category="rice">Rice & Noodles</button>
+<!-- ==================== CHECKOUT ==================== -->
+<div id="page-checkout" class="page">
+    <section class="pt-32 pb-32 px-6">
+        <div class="max-w-[1100px] mx-auto">
+            <div class="text-center mb-16">
+                <svg class="logo-svg mx-auto mb-4" width="36" height="28" style="opacity:.5"><use href="#crown-logo"/></svg>
+                <span class="section-label">Secure Checkout</span>
+                <div class="gold-divider mx-auto mt-4 mb-6"></div>
+                <h1 class="section-title text-white">Complete Your <span class="text-gold-500 italic">Order</span></h1>
             </div>
+            <div class="grid md:grid-cols-5 gap-12">
+                <div class="md:col-span-3" id="checkout-form"></div>
+                <div class="md:col-span-2" id="checkout-summary"></div>
+            </div>
+        </div>
+    </section>
+</div>
 
-            <!-- Menu Content -->
-            <div class="grid lg:grid-cols-2 gap-8">
-                <!-- Menu Items Container -->
-                <div class="glass-card rounded-sm p-6 md:p-8 animate-on-scroll stagger-4" id="menuItems">
-                    <!-- Items will be populated by JavaScript -->
+</main>
+
+<!-- FOOTER -->
+<footer id="footer" class="border-t border-white/5" style="background:linear-gradient(to bottom,#0a0a0a,#050505)">
+    <div class="max-w-[1400px] mx-auto px-6 py-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+            <div class="col-span-2 md:col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <svg class="logo-svg" width="32" height="25"><use href="#crown-logo"/></svg>
+                    <div class="flex flex-col">
+                        <span class="logo-text text-xs">DESERT CROWN</span>
+                        <span class="logo-subtext" style="font-size:7px">Luxury Keffiyeh</span>
+                    </div>
                 </div>
+                <p class="text-white/25 text-xs font-light leading-relaxed">Where ancient Arabic artistry meets contemporary luxury fashion. Crafted for those who wear their heritage with pride.</p>
+            </div>
+            <div>
+                <h5 class="text-gold-500 text-[11px] tracking-[3px] uppercase font-semibold mb-6">Navigate</h5>
+                <ul class="space-y-3">
+                    <li><a onclick="navigateTo('home')" class="text-white/30 text-sm hover:text-gold-500 transition-colors cursor-pointer">Home</a></li>
+                    <li><a onclick="navigateTo('shop')" class="text-white/30 text-sm hover:text-gold-500 transition-colors cursor-pointer">Collection</a></li>
+                    <li><a onclick="navigateTo('cart')" class="text-white/30 text-sm hover:text-gold-500 transition-colors cursor-pointer">Cart</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-gold-500 text-[11px] tracking-[3px] uppercase font-semibold mb-6">Categories</h5>
+                <ul class="space-y-3">
+                    <li><a onclick="filterAndGo('premium')" class="text-white/30 text-sm hover:text-gold-500 transition-colors cursor-pointer">Premium</a></li>
+                    <li><a onclick="filterAndGo('classic')" class="text-white/30 text-sm hover:text-gold-500 transition-colors cursor-pointer">Classic</a></li>
+                    <li><a onclick="filterAndGo('limited')" class="text-white/30 text-sm hover:text-gold-500 transition-colors cursor-pointer">Limited Edition</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-gold-500 text-[11px] tracking-[3px] uppercase font-semibold mb-6">Connect</h5>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-white/30 text-sm hover:text-gold-500 transition-colors">Instagram</a></li>
+                    <li><a href="#" class="text-white/30 text-sm hover:text-gold-500 transition-colors">WhatsApp</a></li>
+                    <li><a href="mailto:hello@desertcrown.com" class="text-white/30 text-sm hover:text-gold-500 transition-colors">Email Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-white/15 text-xs">&copy; 2025 Desert Crown. All rights reserved.</p>
+            <div class="flex items-center gap-2">
+                <svg class="logo-svg" width="16" height="12" style="opacity:.3"><use href="#crown-logo"/></svg>
+                <p class="text-white/15 text-xs">Crafted with pride in the Arabian Gulf</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
-                <!-- Featured Item Image -->
-                <div class="relative animate-on-scroll stagger-5 hidden lg:block">
-                    <div class="sticky top-32">
-                        <div class="aspect-square relative overflow-hidden rounded-sm">
-                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=600&fit=crop" alt="Featured dish" class="w-full h-full object-cover" id="featuredImage">
-                            <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent"></div>
-                        </div>
-                        <div class="absolute bottom-6 left-6 right-6">
-                            <p class="text-[var(--accent)] text-xs tracking-[0.2em] mb-2">CHEF'S RECOMMENDATION</p>
-                            <h3 class="font-display text-2xl tracking-wider" id="featuredName">Healthy Juices</h3>
-                            <p class="text-[var(--muted)] text-sm mt-2" id="featuredDesc">Iron Booster, Liver Cure, Weight Loss, Power Booster</p>
-                        </div>
+<script>
+// ============================
+// IMAGE MAP
+// ============================
+const IMG = {
+    p1:'https://i.ibb.co/ZRsbPJSB/product-1.jpg',
+    p2:'https://i.ibb.co/zTXz0J2d/product-2.jpg',
+    p3:'https://i.ibb.co/Wpt0h0Hn/product-3.jpg',
+    p4:'https://i.ibb.co/qFxM2Nmw/product-4.jpg',
+    p5:'https://i.ibb.co/Vc95vHb6/product-5.jpg',
+    p6:'https://i.ibb.co/JFCpyjBR/product-6.jpg',
+    p7:'https://i.ibb.co/k2pgjsk6/Product-7.jpg',
+    p8:'https://i.ibb.co/spMf0ptY/product-8.jpg',
+    ad1:'https://i.ibb.co/v6ymfb9y/rendom-add.jpg',
+    ad2:'https://i.ibb.co/2Y5m8926/rendom-add1.jpg',
+    hero:'https://i.ibb.co/602tDCP1/shop-main-gate.jpg'
+};
+
+// ============================
+// PRODUCT DATA
+// ============================
+const products = [
+    {id:1,name:"Royal Desert Gold",price:45.000,category:"premium",
+     description:"A majestic interpretation of the classic desert pattern, hand-printed in metallic gold on premium Egyptian cotton. Features intricate Arabic geometric star motifs that catch light beautifully.",
+     details:["100% Egyptian Cotton, 180 thread count","Hand-printed gold geometric pattern","Metallic gold accent threads","Dimensions: 120cm × 120cm","Luxury gift box included"],
+     images:[IMG.p1,IMG.p2,IMG.p3]},
+    {id:2,name:"Arabian Night Heritage",price:38.500,category:"classic",
+     description:"Deep midnight tones meet traditional Arabic lattice patterns in this timeless piece. The intricate interlocking geometric design pays homage to the great mosques of the region.",
+     details:["Premium cotton-polyester blend","Traditional Arabic lattice print","Reinforced edge stitching","Dimensions: 110cm × 110cm","Branded pouch included"],
+     images:[IMG.p2,IMG.p4,IMG.p5]},
+    {id:3,name:"Oasis Pearl White",price:42.000,category:"premium",
+     description:"Inspired by the pearl diving heritage of the Arabian Gulf, this pristine white keffiyeh features delicate mother-of-pearl inspired geometric prints that shimmer subtly in sunlight.",
+     details:["Italian milled cotton","Pearl-finish geometric print","Hand-finished edges","Dimensions: 120cm × 120cm","Signature monogram available"],
+     images:[IMG.p3,IMG.p1,IMG.p6]},
+    {id:4,name:"Sandstorm Premium Black",price:55.000,category:"limited",
+     description:"Our most exclusive creation — jet black fabric adorned with hand-embroidered Arabic calligraphy and geometric patterns in 24k gold-coated thread. Limited to 100 pieces worldwide.",
+     details:["Japanese microfiber cotton","24k gold-coated thread embroidery","Arabic calligraphy accents","Dimensions: 130cm × 130cm","Numbered certificate of authenticity"],
+     images:[IMG.p4,IMG.p6,IMG.p8]},
+    {id:5,name:"Musandam Coastal",price:48.000,category:"premium",
+     description:"Drawing from the dramatic fjords of Musandam, this piece features wave-inspired Arabic geometric patterns in oceanic teal and sand tones on premium linen blend.",
+     details:["Belgian linen-cotton blend","Multi-tone coastal geometric print","Natural dye process","Dimensions: 120cm × 120cm","Wooden display hanger included"],
+     images:[IMG.p5,IMG.p3,IMG.p7]},
+    {id:6,name:"Frankincense Silk",price:65.000,category:"limited",
+     description:"Woven from the finest mulberry silk and printed with frankincense tree-inspired organic geometric patterns. The aroma-infused fabric carries a subtle oud scent for weeks.",
+     details:["100% Grade 6A mulberry silk","Oud-infused micro-encapsulation","Organic geometric print","Dimensions: 130cm × 130cm","Silk storage bag included"],
+     images:[IMG.p6,IMG.p4,IMG.p2]},
+    {id:7,name:"Al Buraimi Heritage",price:40.000,category:"classic",
+     description:"Named after the historic oasis town, this keffiyeh features the traditional fish-scale geometric pattern reimagined in earthy terracotta and sage green tones.",
+     details:["Organic certified cotton","Traditional fish-scale pattern","Plant-based dye process","Dimensions: 110cm × 110cm","Eco-friendly packaging"],
+     images:[IMG.p7,IMG.p5,IMG.p8]},
+    {id:8,name:"Salalah Monsoon",price:52.000,category:"premium",
+     description:"Capturing the magic of Salalah's khareef season, this piece features lush green geometric patterns on pearl-white fabric, symbolizing the miraculous transformation of desert to garden.",
+     details:["Egyptian long-staple cotton","Monsoon green geometric print","Gradient edge detailing","Dimensions: 120cm × 120cm","Limited seasonal edition"],
+     images:[IMG.p8,IMG.p7,IMG.p1]},
+    {id:9,name:"Sultan's Gold Thread",price:78.000,category:"limited",
+     description:"The crown jewel of our collection. Entirely hand-woven with real gold-thread accents on black silk, featuring the rare eight-pointed star pattern. Only 50 pieces exist.",
+     details:["Pure silk with gold thread","Sultan's eight-star pattern","Hand-woven by master artisans","Dimensions: 140cm × 140cm","Royal presentation case","Personal fitting appointment"],
+     images:[IMG.p1,IMG.p4,IMG.p6]},
+    {id:10,name:"Wadi Shab Earth",price:44.000,category:"classic",
+     description:"Inspired by the layered rock formations of Wadi Shab, this keffiyeh features stacked geometric patterns in warm earth tones — amber, sienna, and sandstone on natural cream fabric.",
+     details:["Organic cotton canvas","Layered earth-tone print","Textured hand-feel finish","Dimensions: 115cm × 115cm","Travel-friendly roll case"],
+     images:[IMG.p3,IMG.p5,IMG.p7]},
+    {id:11,name:"Nizwa Fortress Edition",price:58.000,category:"limited",
+     description:"The imposing round tower of Nizwa Fort inspired this bold geometric design. Strong angular patterns in charcoal and copper on heavyweight cotton — architecture you can wear.",
+     details:["Heavyweight 280gsm cotton","Architectural geometric print","Copper metallic accents","Dimensions: 125cm × 125cm","Complementary agal accessory"],
+     images:[IMG.p5,IMG.p8,IMG.p2]},
+    {id:12,name:"Jebel Akhdar Alpine",price:62.000,category:"limited",
+     description:"From Oman's 'Green Mountain' comes this stunning piece — rose-pink and sage geometric patterns on white, reflecting the wild damask roses that bloom at 3,000 meters altitude.",
+     details:["Swiss-engineered cotton","Damask rose inspired print","Temperature-regulating weave","Dimensions: 120cm × 120cm","Botanical sample included"],
+     images:[IMG.p8,IMG.p6,IMG.p3]}
+];
+
+// ============================
+// CART SYSTEM
+// ============================
+const CART_KEY='dc-cart';
+function getCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||[];}catch{return[];}}
+function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c));updateCartBadge();}
+function addToCart(id){
+    const p=products.find(x=>x.id===id);if(!p)return;
+    const c=getCart();const e=c.find(x=>x.id===id);
+    if(e)e.qty++;else c.push({id:p.id,name:p.name,price:p.price,image:p.images[0],qty:1});
+    saveCart(c);showToast(p.name+' added to cart','success');
+}
+function removeFromCart(id){saveCart(getCart().filter(x=>x.id!==id));renderCart();}
+function updateQty(id,q){if(q<1)return removeFromCart(id);const c=getCart();const i=c.find(x=>x.id===id);if(i){i.qty=q;saveCart(c);renderCart();renderCheckoutSummary();}}
+function getCartTotal(){return getCart().reduce((s,i)=>s+i.price*i.qty,0);}
+function getCartCount(){return getCart().reduce((s,i)=>s+i.qty,0);}
+function updateCartBadge(){
+    const b=document.getElementById('cart-badge');const n=getCartCount();
+    if(n>0){b.style.display='flex';b.textContent=n;}else{b.style.display='none';}
+}
+
+// ============================
+// TOAST
+// ============================
+function showToast(msg,type='success'){
+    const c=document.getElementById('toast-container');
+    const t=document.createElement('div');t.className='toast toast-'+type;t.textContent=msg;
+    c.appendChild(t);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));
+    setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400);},3000);
+}
+
+// ============================
+// ROUTER
+// ============================
+let currentPage='home',currentFilter='all',currentProductId=null;
+function navigateTo(page,param){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const t=document.getElementById('page-'+page);
+    if(t){
+        t.classList.add('active');currentPage=page;
+        window.scrollTo({top:0,behavior:'instant'});
+        document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active',l.dataset.page===page));
+        if(page==='shop'){renderProductGrid(currentFilter);initShopAnimations();}
+        if(page==='product'){currentProductId=param;renderProductDetail(param);initProductAnimations();}
+        if(page==='cart'){renderCart();initCartAnimations();}
+        if(page==='checkout'){renderCheckout();initCheckoutAnimations();}
+        if(page==='home')initHomeAnimations();
+    }
+}
+function filterAndGo(c){currentFilter=c;navigateTo('shop');}
+
+// ============================
+// SHOP
+// ============================
+function renderProductGrid(filter='all'){
+    currentFilter=filter;
+    const grid=document.getElementById('product-grid');
+    const f=filter==='all'?products:products.filter(p=>p.category===filter);
+    document.querySelectorAll('.filter-btn').forEach(b=>{
+        const a=b.dataset.filter===filter;
+        b.style.borderColor=a?'#D4AF37':'rgba(255,255,255,0.1)';
+        b.style.color=a?'#D4AF37':'rgba(255,255,255,0.5)';
+    });
+    grid.innerHTML=f.map((p,i)=>`
+        <div class="product-card reveal" style="transition-delay:${i*0.08}s" onclick="navigateTo('product',${p.id})">
+            <div class="relative aspect-[3/4] overflow-hidden bg-dark-400">
+                <img src="${p.images[0]}" alt="${p.name}" class="card-img" loading="lazy">
+                <div class="fabric-texture absolute inset-0"></div>
+                <div class="card-overlay"></div>
+                <div class="card-actions">
+                    <button class="card-add-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>
+                </div>
+                ${p.category==='limited'?'<span class="absolute top-3 left-3 bg-gold-500 text-dark-600 text-[9px] tracking-[2px] uppercase font-bold px-3 py-1">Limited</span>':''}
+            </div>
+            <div class="pt-4 pb-2">
+                <h3 class="text-white text-sm font-medium tracking-wide">${p.name}</h3>
+                <div class="flex items-center justify-between mt-2">
+                    <span class="text-gold-500 text-sm font-semibold">OMR ${p.price.toFixed(3)}</span>
+                    <span class="text-white/20 text-[10px] tracking-[2px] uppercase">${p.category}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    if(window.lucide)lucide.createIcons();
+}
+function filterProducts(f){renderProductGrid(f);}
+
+// ============================
+// PRODUCT DETAIL
+// ============================
+function renderProductDetail(id){
+    const p=products.find(x=>x.id===id);if(!p){navigateTo('shop');return;}
+    document.getElementById('product-detail-content').innerHTML=`
+        <div class="max-w-[1200px] mx-auto">
+            <button onclick="navigateTo('shop')" class="flex items-center gap-2 text-white/30 hover:text-gold-500 transition-colors text-sm mb-12 cursor-pointer">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Collection
+            </button>
+            <div class="grid md:grid-cols-2 gap-12 md:gap-20">
+                <div class="reveal-left">
+                    <div class="zoom-container aspect-[3/4] bg-dark-400 relative">
+                        <img id="main-product-img" src="${p.images[0]}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
+                        <div class="fabric-texture absolute inset-0"></div>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        ${p.images.map((img,i)=>`
+                            <div class="w-20 h-24 overflow-hidden border ${i===0?'border-gold-500':'border-white/10'} cursor-pointer hover:border-gold-500 transition-colors thumb-btn" onclick="changeMainImage('${img}',this)">
+                                <img src="${img}" alt="Thumb" class="w-full h-full object-cover">
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="reveal-right">
+                    <span class="section-label">${p.category==='limited'?'Limited Edition':p.category==='premium'?'Premium Collection':'Classic Collection'}</span>
+                    <h1 class="font-display text-white text-4xl md:text-5xl font-bold mt-4 mb-4">${p.name}</h1>
+                    <div class="gold-divider mb-6"></div>
+                    <p class="text-gold-500 text-2xl font-semibold mb-8">OMR ${p.price.toFixed(3)}</p>
+                    <p class="text-white/40 font-light leading-relaxed mb-10">${p.description}</p>
+                    <div class="mb-10">
+                        <h4 class="text-white text-xs tracking-[3px] uppercase font-semibold mb-4">Product Details</h4>
+                        <ul class="space-y-3">
+                            ${p.details.map(d=>`<li class="flex items-start gap-3 text-white/30 text-sm font-light"><i data-lucide="check" class="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0"></i>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="flex gap-4 flex-wrap">
+                        <button class="btn-gold flex-1" onclick="addToCart(${p.id})">Add to Cart</button>
+                        <button class="btn-outline" onclick="addToCart(${p.id});navigateTo('checkout')">Buy Now</button>
+                    </div>
+                    <div class="mt-8 flex items-center gap-6 text-white/20 text-xs">
+                        <span class="flex items-center gap-2"><i data-lucide="truck" class="w-4 h-4"></i> Free Shipping</span>
+                        <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> Authenticity Guaranteed</span>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    `;
+    if(window.lucide)lucide.createIcons();
+}
+function changeMainImage(src,el){
+    document.getElementById('main-product-img').src=src;
+    document.querySelectorAll('.thumb-btn').forEach(b=>{if(b.classList.contains('border-gold-500'))b.classList.replace('border-gold-500','border-white/10');});
+    el.classList.replace('border-white/10','border-gold-500');
+}
 
-    <!-- Reservation Section -->
-    <section id="reservation" class="py-24 md:py-32 relative">
-        <div class="absolute inset-0 hero-bg"></div>
-        <div class="absolute inset-0 noise-overlay"></div>
-        
-        <div class="relative z-10 max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <!-- Content -->
+// ============================
+// CART PAGE
+// ============================
+function renderCart(){
+    const c=document.getElementById('cart-content');const cart=getCart();
+    if(!cart.length){
+        c.innerHTML=`<div class="text-center py-20">
+            <svg class="logo-svg mx-auto mb-6" width="48" height="38" style="opacity:.15"><use href="#crown-logo"/></svg>
+            <h3 class="text-white/40 text-xl font-display mb-4">Your cart is empty</h3>
+            <p class="text-white/20 text-sm mb-8">Explore our collection and find your perfect keffiyeh</p>
+            <button class="btn-gold" onclick="navigateTo('shop')">Browse Collection</button>
+        </div>`;
+        if(window.lucide)lucide.createIcons();return;
+    }
+    const t=getCartTotal();
+    c.innerHTML=`
+        <div class="grid md:grid-cols-3 gap-12">
+            <div class="md:col-span-2">
+                ${cart.map(i=>`
+                    <div class="cart-item flex gap-6 items-center">
+                        <div class="w-20 h-24 md:w-24 md:h-32 bg-dark-400 overflow-hidden flex-shrink-0 relative">
+                            <img src="${i.image}" alt="${i.name}" class="w-full h-full object-cover">
+                            <div class="fabric-texture absolute inset-0"></div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-white text-sm md:text-base font-medium truncate">${i.name}</h4>
+                            <p class="text-gold-500 text-sm mt-1">OMR ${i.price.toFixed(3)}</p>
+                            <div class="flex items-center gap-3 mt-3">
+                                <button class="qty-btn" onclick="updateQty(${i.id},${i.qty-1})">−</button>
+                                <span class="text-white text-sm w-8 text-center">${i.qty}</span>
+                                <button class="qty-btn" onclick="updateQty(${i.id},${i.qty+1})">+</button>
+                            </div>
+                        </div>
+                        <div class="text-right flex-shrink-0">
+                            <p class="text-white text-sm font-medium">OMR ${(i.price*i.qty).toFixed(3)}</p>
+                            <button onclick="removeFromCart(${i.id})" class="text-white/20 hover:text-red-400 transition-colors mt-3 cursor-pointer"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="md:col-span-1">
+                <div class="bg-white/[0.03] border border-white/5 p-8 sticky top-32">
+                    <h4 class="text-white text-sm tracking-[2px] uppercase font-semibold mb-6">Order Summary</h4>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between text-sm"><span class="text-white/30">Subtotal</span><span class="text-white">OMR ${t.toFixed(3)}</span></div>
+                        <div class="flex justify-between text-sm"><span class="text-white/30">Shipping</span><span class="text-gold-500">Free</span></div>
+                    </div>
+                    <div class="border-t border-white/10 pt-4 mb-8">
+                        <div class="flex justify-between"><span class="text-white font-semibold">Total</span><span class="text-gold-500 text-xl font-bold">OMR ${t.toFixed(3)}</span></div>
+                    </div>
+                    <button class="btn-gold w-full" onclick="navigateTo('checkout')">Proceed to Checkout</button>
+                    <button onclick="navigateTo('shop')" class="w-full text-center text-white/30 text-xs mt-4 hover:text-gold-500 transition-colors cursor-pointer">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    `;
+    if(window.lucide)lucide.createIcons();
+}
+
+// ============================
+// CHECKOUT
+// ============================
+function renderCheckout(){
+    const cart=getCart();if(!cart.length){navigateTo('cart');return;}
+    document.getElementById('checkout-form').innerHTML=`
+        <div class="reveal-left">
+            <h3 class="text-white text-lg font-display font-semibold mb-8">Shipping Information</h3>
+            <form id="shipping-form" class="space-y-5" onsubmit="event.preventDefault()">
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="form-label">First Name</label><input type="text" class="form-input" id="fname" required></div>
+                    <div><label class="form-label">Last Name</label><input type="text" class="form-input" id="lname" required></div>
+                </div>
+                <div><label class="form-label">Email</label><input type="email" class="form-input" id="email" required></div>
+                <div><label class="form-label">Phone (+968)</label><input type="tel" class="form-input" id="phone" placeholder="9XXX XXXX" required></div>
+                <div><label class="form-label">Address</label><input type="text" class="form-input" id="address" required></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="form-label">City</label><input type="text" class="form-input" id="city" value="Muscat"></div>
+                    <div><label class="form-label">Postal Code</label><input type="text" class="form-input" id="postal" placeholder="1XX"></div>
+                </div>
+                <div><label class="form-label">Country</label><input type="text" class="form-input" value="Oman" disabled style="opacity:.5"></div>
+            </form>
+            <h3 class="text-white text-lg font-display font-semibold mt-12 mb-6">Payment Method</h3>
+            <div class="flex items-center gap-4 p-5 border border-gold-500/30 bg-gold-500/5">
+                <i data-lucide="credit-card" class="w-6 h-6 text-gold-500"></i>
                 <div>
-                    <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">RESERVATIONS</p>
-                    <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
-                        Book Your<br>Experience
-                    </h2>
-                    <div class="section-divider !mx-0 animate-on-scroll stagger-2"></div>
-                    
-                    <p class="text-[var(--muted)] leading-relaxed mb-8 animate-on-scroll stagger-3">
-                        Secure your table at Tasty World Cafeteria. Whether it's an intimate dinner or a celebration, we ensure an unforgettable dining experience.
-                    </p>
-
-                    <!-- Opening Hours -->
-                    <div class="glass-card rounded-sm p-6 mb-6 animate-on-scroll stagger-4">
-                        <h4 class="font-display text-sm tracking-wider mb-4 text-[var(--accent)]">Opening Hours</h4>
-                        <div class="space-y-3 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-[var(--muted)]">Monday - Thursday</span>
-                                <span>10:00 AM - 11:00 PM</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-[var(--muted)]">Friday - Saturday</span>
-                                <span>10:00 AM - 12:00 AM</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-[var(--muted)]">Sunday</span>
-                                <span>11:00 AM - 10:00 PM</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="https://wa.me/97450000000" class="flex items-center gap-3 text-[var(--accent)] hover:text-[var(--accent-light)] transition-colors animate-on-scroll stagger-5">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                        </svg>
-                        <span class="tracking-wider">Instant Booking via WhatsApp</span>
-                    </a>
-                </div>
-
-                <!-- Form -->
-                <div class="glass-card rounded-sm p-8 animate-on-scroll stagger-3">
-                    <form id="reservationForm" class="space-y-6">
-                        <div class="grid sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Your Name</label>
-                                <input type="text" class="form-input rounded-sm" placeholder="John Doe" required>
-                            </div>
-                            <div>
-                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Phone Number</label>
-                                <input type="tel" class="form-input rounded-sm" placeholder="+974 5000 0000" required>
-                            </div>
-                        </div>
-                        
-                        <div class="grid sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Date</label>
-                                <input type="date" class="form-input rounded-sm" required>
-                            </div>
-                            <div>
-                                <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Time</label>
-                                <select class="form-input rounded-sm" required>
-                                    <option value="">Select Time</option>
-                                    <option value="10:00">10:00 AM</option>
-                                    <option value="11:00">11:00 AM</option>
-                                    <option value="12:00">12:00 PM</option>
-                                    <option value="13:00">1:00 PM</option>
-                                    <option value="14:00">2:00 PM</option>
-                                    <option value="18:00">6:00 PM</option>
-                                    <option value="19:00">7:00 PM</option>
-                                    <option value="20:00">8:00 PM</option>
-                                    <option value="21:00">9:00 PM</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Number of Guests</label>
-                            <select class="form-input rounded-sm" required>
-                                <option value="">Select Guests</option>
-                                <option value="1">1 Person</option>
-                                <option value="2">2 People</option>
-                                <option value="3">3 People</option>
-                                <option value="4">4 People</option>
-                                <option value="5">5 People</option>
-                                <option value="6">6+ People</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="text-xs tracking-wider text-[var(--muted)] mb-2 block">Special Requests</label>
-                            <textarea class="form-input rounded-sm h-24 resize-none" placeholder="Any dietary requirements or special occasions..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn-primary rounded-sm w-full">Confirm Reservation</button>
-                    </form>
+                    <p class="text-white text-sm font-medium">Secure Online Payment</p>
+                    <p class="text-white/30 text-xs">Powered by Razorpay — 256-bit SSL encrypted</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-24 md:py-32 relative bg-[var(--bg-secondary)]">
-        <div class="absolute inset-0 noise-overlay"></div>
-        
-        <div class="relative z-10 max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">VISUAL JOURNEY</p>
-                <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
-                    Our Gallery
-                </h2>
-                <div class="section-divider animate-on-scroll stagger-2"></div>
-            </div>
-
-            <!-- Gallery Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-1 cursor-pointer" onclick="openLightbox(this)">
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=400&fit=crop" alt="Gourmet dish" class="w-full h-full object-cover">
-                    <div class="gallery-overlay flex items-end p-4">
-                        <span class="text-sm font-display tracking-wider">Gourmet Selection</span>
-                    </div>
+    `;
+    renderCheckoutSummary();
+    if(window.lucide)lucide.createIcons();
+}
+function renderCheckoutSummary(){
+    const cart=getCart();const t=getCartTotal();
+    document.getElementById('checkout-summary').innerHTML=`
+        <div class="reveal-right">
+            <div class="bg-white/[0.03] border border-white/5 p-8 sticky top-32">
+                <div class="flex items-center gap-2 mb-6">
+                    <svg class="logo-svg" width="20" height="16" style="opacity:.5"><use href="#crown-logo"/></svg>
+                    <h4 class="text-white text-sm tracking-[2px] uppercase font-semibold">Your Order</h4>
                 </div>
-                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-2 cursor-pointer" onclick="openLightbox(this)">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop" alt="Restaurant interior" class="w-full h-full object-cover">
-                    <div class="gallery-overlay flex items-end p-4">
-                        <span class="text-sm font-display tracking-wider">Ambient Dining</span>
-                    </div>
+                <div class="space-y-4 mb-6">
+                    ${cart.map(i=>`<div class="flex gap-3 items-center"><div class="w-12 h-14 bg-dark-400 overflow-hidden flex-shrink-0"><img src="${i.image}" alt="" class="w-full h-full object-cover"></div><div class="flex-1 min-w-0"><p class="text-white text-xs font-medium truncate">${i.name}</p><p class="text-white/30 text-[11px]">Qty: ${i.qty}</p></div><p class="text-white text-xs">OMR ${(i.price*i.qty).toFixed(3)}</p></div>`).join('')}
                 </div>
-                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-3 cursor-pointer" onclick="openLightbox(this)">
-                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&h=400&fit=crop" alt="Fresh salad" class="w-full h-full object-cover">
-                    <div class="gallery-overlay flex items-end p-4">
-                        <span class="text-sm font-display tracking-wider">Fresh Ingredients</span>
-                    </div>
+                <div class="border-t border-white/10 pt-4 space-y-3 mb-6">
+                    <div class="flex justify-between text-sm"><span class="text-white/30">Subtotal</span><span class="text-white">OMR ${t.toFixed(3)}</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-white/30">Shipping</span><span class="text-gold-500">Free</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-white/30">VAT (5%)</span><span class="text-white">OMR ${(t*.05).toFixed(3)}</span></div>
                 </div>
-                <div class="gallery-item aspect-square rounded-sm overflow-hidden md:col-span-2 animate-on-scroll stagger-4 cursor-pointer" onclick="openLightbox(this)">
-                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop" alt="Fine dining" class="w-full h-full object-cover">
-                    <div class="gallery-overlay flex items-end p-4">
-                        <span class="text-sm font-display tracking-wider">Culinary Art</span>
-                    </div>
+                <div class="border-t border-white/10 pt-4 mb-8">
+                    <div class="flex justify-between"><span class="text-white font-semibold">Total</span><span class="text-gold-500 text-xl font-bold">OMR ${(t*1.05).toFixed(3)}</span></div>
                 </div>
-                <div class="gallery-item aspect-square rounded-sm overflow-hidden animate-on-scroll stagger-5 cursor-pointer" onclick="openLightbox(this)">
-                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=400&fit=crop" alt="Dessert" class="w-full h-full object-cover">
-                    <div class="gallery-overlay flex items-end p-4">
-                        <span class="text-sm font-display tracking-wider">Sweet Finale</span>
-                    </div>
-                </div>
+                <button class="btn-gold w-full" onclick="processPayment()">Pay Now — OMR ${(t*1.05).toFixed(3)}</button>
+                <p class="text-white/15 text-[10px] text-center mt-4">By placing this order, you agree to our terms of service</p>
             </div>
         </div>
-    </section>
+    `;
+    if(window.lucide)lucide.createIcons();
+}
 
-    <!-- Testimonials Section -->
-    <section class="py-24 md:py-32 relative overflow-hidden">
-        <div class="absolute inset-0 hero-bg"></div>
-        <div class="absolute inset-0 noise-overlay"></div>
-        
-        <div class="relative z-10 max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">GUEST EXPERIENCES</p>
-                <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
-                    What Our Guests Say
-                </h2>
-                <div class="section-divider animate-on-scroll stagger-2"></div>
-            </div>
+// ============================
+// RAZORPAY
+// ============================
+function processPayment(){
+    const fn=document.getElementById('fname')?.value;
+    const em=document.getElementById('email')?.value;
+    const ph=document.getElementById('phone')?.value;
+    if(!fn||!em||!ph){showToast('Please fill in all shipping details','error');return;}
+    const total=getCartTotal()*1.05;
+    const amt=Math.round(total*1000);
+    const opts={
+        key:"rzp_test_XXXXXXXXXXXXXXXX",amount:amt,currency:"OMR",
+        name:"Desert Crown",description:"Premium Keffiyeh Collection",
+        handler:function(r){showToast('Payment successful! Order confirmed.','success');localStorage.removeItem(CART_KEY);updateCartBadge();setTimeout(()=>navigateTo('home'),2500);},
+        prefill:{name:fn,email:em,contact:ph},
+        theme:{color:"#D4AF37"},
+        modal:{ondismiss:function(){showToast('Payment cancelled','info');}}
+    };
+    try{
+        const rzp=new Razorpay(opts);
+        rzp.on('payment.failed',function(){showToast('Payment failed. Please try again.','error');});
+        rzp.open();
+    }catch(e){
+        showToast('Demo mode — Payment simulated successfully!','success');
+        localStorage.removeItem(CART_KEY);updateCartBadge();
+        setTimeout(()=>navigateTo('home'),2500);
+    }
+}
 
-            <!-- Testimonials Carousel -->
-            <div class="relative" id="testimonialCarousel">
-                <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 scrollbar-hide" style="scrollbar-width: none;">
-                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0 animate-on-scroll stagger-3">
-                        <div class="flex items-center gap-1 mb-4">
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                        </div>
-                        <p class="text-[var(--muted)] leading-relaxed mb-6">"An extraordinary dining experience. The Spanish Burger was absolutely divine, and the ambiance transported us to another world."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
-                                <span class="font-display text-[var(--accent)]">AK</span>
-                            </div>
-                            <div>
-                                <p class="font-medium text-sm">Ahmed Khalid</p>
-                                <p class="text-xs text-[var(--muted)]">Food Critic</p>
-                            </div>
-                        </div>
-                    </div>
+// ============================
+// MOBILE MENU
+// ============================
+let mobileOpen=false;
+function toggleMobile(){
+    mobileOpen=!mobileOpen;
+    document.getElementById('mobile-menu').classList.toggle('open',mobileOpen);
+    document.body.style.overflow=mobileOpen?'hidden':'';
+    const h1=document.getElementById('ham-1'),h2=document.getElementById('ham-2'),h3=document.getElementById('ham-3');
+    if(mobileOpen){h1.style.transform='rotate(45deg) translate(4px,4px)';h2.style.opacity='0';h3.style.transform='rotate(-45deg) translate(4px,-4px)';}
+    else{h1.style.transform='';h2.style.opacity='';h3.style.transform='';}
+}
+function closeMobile(){
+    mobileOpen=false;
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.body.style.overflow='';
+    document.getElementById('ham-1').style.transform='';
+    document.getElementById('ham-2').style.opacity='';
+    document.getElementById('ham-3').style.transform='';
+}
 
-                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0 animate-on-scroll stagger-4">
-                        <div class="flex items-center gap-1 mb-4">
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                        </div>
-                        <p class="text-[var(--muted)] leading-relaxed mb-6">"The healthy juices are a game changer! Fresh, delicious, and you can taste the quality in every sip. My go-to spot for wellness drinks."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
-                                <span class="font-display text-[var(--accent)]">SM</span>
-                            </div>
-                            <div>
-                                <p class="font-medium text-sm">Sara Mohamed</p>
-                                <p class="text-xs text-[var(--muted)]">Regular Guest</p>
-                            </div>
-                        </div>
-                    </div>
+// ============================
+// HEADER SCROLL
+// ============================
+function handleHeaderScroll(){
+    document.getElementById('header').classList.toggle('scrolled',window.scrollY>80);
+}
 
-                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0 animate-on-scroll stagger-5">
-                        <div class="flex items-center gap-1 mb-4">
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                        </div>
-                        <p class="text-[var(--muted)] leading-relaxed mb-6">"Best wraps in the city! The Mathafi Wrap with fries is perfection. Service is impeccable and the atmosphere is simply elegant."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
-                                <span class="font-display text-[var(--accent)]">OR</span>
-                            </div>
-                            <div>
-                                <p class="font-medium text-sm">Omar Rahman</p>
-                                <p class="text-xs text-[var(--muted)]">Business Executive</p>
-                            </div>
-                        </div>
-                    </div>
+// ============================
+// ANIMATIONS
+// ============================
+function killScrollTriggers(){ScrollTrigger.getAll().forEach(st=>st.kill());}
 
-                    <div class="testimonial-card rounded-sm min-w-[300px] md:min-w-[400px] snap-center flex-shrink-0">
-                        <div class="flex items-center gap-1 mb-4">
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                        </div>
-                        <p class="text-[var(--muted)] leading-relaxed mb-6">"The Singapore Fried Rice took me back to my travels in Asia. Authentic flavors with a premium twist. A must-visit for food lovers!"</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center">
-                                <span class="font-display text-[var(--accent)]">FA</span>
-                            </div>
-                            <div>
-                                <p class="font-medium text-sm">Fatima Al-Hassan</p>
-                                <p class="text-xs text-[var(--muted)]">Travel Blogger</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+function initHomeAnimations(){
+    killScrollTriggers();
+    gsap.to('.hero-anim',{opacity:1,y:0,duration:1,stagger:.15,ease:'power3.out',delay:.3});
+    gsap.utils.toArray('#page-home .reveal').forEach(el=>{
+        gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});
+    });
+    gsap.utils.toArray('#page-home .reveal-left').forEach(el=>{
+        gsap.to(el,{opacity:1,x:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});
+    });
+    gsap.utils.toArray('#page-home .reveal-right').forEach(el=>{
+        gsap.to(el,{opacity:1,x:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});
+    });
+    gsap.utils.toArray('#page-home .reveal-scale').forEach(el=>{
+        gsap.to(el,{opacity:1,scale:1,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 80%',toggleActions:'play none none none'}});
+    });
+    gsap.utils.toArray('.parallax-bg').forEach(bg=>{
+        gsap.to(bg,{yPercent:20,ease:'none',scrollTrigger:{trigger:bg.parentElement,start:'top bottom',end:'bottom top',scrub:true}});
+    });
+}
+function initShopAnimations(){
+    setTimeout(()=>{gsap.utils.toArray('#page-shop .reveal').forEach(el=>{
+        gsap.to(el,{opacity:1,y:0,duration:.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}});
+    });},50);
+}
+function initProductAnimations(){
+    setTimeout(()=>{
+        gsap.utils.toArray('#page-product .reveal-left').forEach(el=>{gsap.to(el,{opacity:1,x:0,duration:.8,ease:'power3.out'});});
+        gsap.utils.toArray('#page-product .reveal-right').forEach(el=>{gsap.to(el,{opacity:1,x:0,duration:.8,delay:.2,ease:'power3.out'});});
+    },50);
+}
+function initCartAnimations(){
+    setTimeout(()=>{gsap.from('#cart-content > div',{opacity:0,y:20,duration:.6,ease:'power3.out'});},50);
+}
+function initCheckoutAnimations(){
+    setTimeout(()=>{
+        gsap.utils.toArray('#page-checkout .reveal-left').forEach(el=>{gsap.to(el,{opacity:1,x:0,duration:.8,ease:'power3.out'});});
+        gsap.utils.toArray('#page-checkout .reveal-right').forEach(el=>{gsap.to(el,{opacity:1,x:0,duration:.8,delay:.2,ease:'power3.out'});});
+    },50);
+}
 
-                <!-- Carousel Indicators -->
-                <div class="flex justify-center gap-2 mt-4">
-                    <button class="w-8 h-1 bg-[var(--accent)] rounded-full transition-all" data-index="0"></button>
-                    <button class="w-8 h-1 bg-[var(--border)] rounded-full transition-all hover:bg-[var(--accent)]" data-index="1"></button>
-                    <button class="w-8 h-1 bg-[var(--border)] rounded-full transition-all hover:bg-[var(--accent)]" data-index="2"></button>
-                    <button class="w-8 h-1 bg-[var(--border)] rounded-full transition-all hover:bg-[var(--accent)]" data-index="3"></button>
-                </div>
-            </div>
-        </div>
-    </section>
+// ============================
+// LOADER
+// ============================
+function initLoader(){
+    const tl=gsap.timeline();
+    tl.to('.loader-logo-wrap',{opacity:1,y:0,duration:.8,ease:'power3.out'})
+      .to('.loader-line',{width:140,duration:.6,ease:'power2.inOut'},'-=.3')
+      .to({}, {duration:.5})
+      .to('.loader-logo-wrap',{opacity:0,y:-20,duration:.4})
+      .to('.loader-line',{opacity:0,duration:.3},'-=.3')
+      .to('#loader',{opacity:0,duration:.3,onComplete:()=>{
+          document.getElementById('loader').style.display='none';
+          initHomeAnimations();
+      }});
+}
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 md:py-32 relative bg-[var(--bg-secondary)]">
-        <div class="absolute inset-0 noise-overlay"></div>
-        
-        <div class="relative z-10 max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16">
-                <!-- Contact Info -->
-                <div>
-                    <p class="text-[var(--accent)] tracking-[0.3em] text-xs mb-4 animate-on-scroll">GET IN TOUCH</p>
-                    <h2 class="font-display text-3xl md:text-5xl font-semibold tracking-wider mb-6 animate-on-scroll stagger-1">
-                        Visit Us
-                    </h2>
-                    <div class="section-divider !mx-0 animate-on-scroll stagger-2"></div>
-
-                    <div class="space-y-8 mt-8">
-                        <div class="flex items-start gap-4 animate-on-scroll stagger-3">
-                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">Location</h4>
-                                <p class="text-[var(--muted)] text-sm">Al Waab Street, Doha, Qatar</p>
-                                <a href="#" class="text-[var(--accent)] text-xs tracking-wider hover:underline mt-1 inline-block">Get Directions</a>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 animate-on-scroll stagger-4">
-                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">Phone</h4>
-                                <p class="text-[var(--muted)] text-sm">+974 5000 0000</p>
-                                <a href="tel:+97450000000" class="text-[var(--accent)] text-xs tracking-wider hover:underline mt-1 inline-block">Call Now</a>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 animate-on-scroll stagger-5">
-                            <div class="w-12 h-12 rounded-full bg-[var(--glass)] border border-[var(--border)] flex items-center justify-center flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                    <polyline points="22,6 12,13 2,6"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">Email</h4>
-                                <p class="text-[var(--muted)] text-sm">info@tastyworld.qa</p>
-                                <a href="mailto:info@tastyworld.qa" class="text-[var(--accent)] text-xs tracking-wider hover:underline mt-1 inline-block">Send Email</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Map -->
-                <div class="animate-on-scroll stagger-3">
-                    <div class="aspect-video rounded-sm overflow-hidden border border-[var(--border)]">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.123456789!2d51.5!3d25.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDE4JzAwLjAiTiA1McKwMzAnMDAuMCJF!5e0!3m2!1sen!2sqa!4v1234567890"
-                            width="100%" 
-                            height="100%" 
-                            style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" 
-                            allowfullscreen="" 
-                            loading="lazy"
-                            title="Restaurant Location">
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-[var(--border)]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-3 gap-12 items-center">
-                <!-- Logo -->
-                <div class="text-center md:text-left">
-                    <div class="flex items-center gap-3 justify-center md:justify-start mb-4">
-                        <div class="logo-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 class="font-display text-lg font-semibold tracking-wider">TASTY WORLD</h1>
-                            <p class="text-[0.65rem] tracking-[0.3em] text-[var(--muted)]">CAFETERIA</p>
-                        </div>
-                    </div>
-                    <p class="text-[var(--muted)] text-sm">Premium Dining Experience</p>
-                </div>
-
-                <!-- Social Links -->
-                <div class="flex justify-center gap-6">
-                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Instagram">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Facebook">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Twitter">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all" aria-label="Snapchat">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2C7.58 2 4 5.58 4 10c0 2.03.76 3.87 2 5.28V20l4-2 4 2 4-2v-4.72c1.24-1.41 2-3.25 2-5.28 0-4.42-3.58-8-8-8z"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="text-center md:text-right">
-                    <p class="text-xs text-[var(--muted)] tracking-wider mb-3">QUICK LINKS</p>
-                    <div class="flex flex-wrap justify-center md:justify-end gap-4 text-sm">
-                        <a href="#menu" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">Menu</a>
-                        <a href="#reservation" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">Reservations</a>
-                        <a href="#contact" class="text-[var(--muted)] hover:text-[var(--accent)] transition-colors">Contact</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t border-[var(--border)] mt-8 pt-8 text-center">
-                <p class="text-xs text-[var(--muted)]">2024 Tasty World Cafeteria. All rights reserved. Crafted with passion.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <button class="absolute top-6 right-6 text-white hover:text-[var(--accent)] transition-colors" aria-label="Close">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <line x1="18" y1="6" x2="6" y2="18"/>
-                <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-        </button>
-        <img src="" alt="Gallery image" id="lightboxImg">
-    </div>
-
-    <!-- Reservation Confirmation Modal -->
-    <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 invisible transition-all" id="confirmationModal">
-        <div class="glass-card rounded-sm p-8 max-w-md mx-6 text-center transform scale-90 transition-all">
-            <div class="w-16 h-16 rounded-full bg-green-500/20 border border-green-500 flex items-center justify-center mx-auto mb-6">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"/>
-                </svg>
-            </div>
-            <h3 class="font-display text-2xl tracking-wider mb-4">Reservation Confirmed</h3>
-            <p class="text-[var(--muted)] mb-6">Thank you for choosing Tasty World Cafeteria. We look forward to serving you.</p>
-            <button onclick="closeConfirmation()" class="btn-primary rounded-sm">Close</button>
-        </div>
-    </div>
-
-    <script>
-        // Menu Data
-        const menuData = {
-            juices: [
-                { name: "Healthy Juices", price: "15 QR", desc: "Iron Booster, Liver Cure, Weight Loss, Power Booster", badge: true },
-                { name: "Fresh Juice", price: "4 - 15 QR", desc: "Kiwi, Mango, Watermelon, Guava, Sweet Melon, Lemon Mint, Cocktail, Avocado, Papaya, Banana, Strawberry, Orange, Chikku, Carrot, Pineapple, Pomegranate" },
-                { name: "Special Juices", price: "8 - 16 QR", desc: "Abood, Avil Milk, Burj Aspire, By Five" },
-                { name: "Bottle Juices", price: "25 - 45 QR", desc: "Mango, Cocktail, Lemon Mint, Orange, Pomegranate, Avocado" }
-            ],
-            wraps: [
-                { name: "Mathafi Wrap", price: "10 - 13 QR", desc: "Served with fries", badge: true },
-                { name: "Fillet Wrap", price: "10 - 13 QR", desc: "Served with fries" },
-                { name: "Nuggets Wrap", price: "10 - 13 QR", desc: "Served with fries" },
-                { name: "Zinker Wrap", price: "10 - 13 QR", desc: "Served with fries" },
-                { name: "Tikka Wrap", price: "10 - 13 QR", desc: "Served with fries" },
-                { name: "Hotdog Wrap", price: "10 - 13 QR", desc: "Served with fries" },
-                { name: "Egg Wrap", price: "10 - 13 QR", desc: "Served with fries" },
-                { name: "Prawns Wrap", price: "10 - 13 QR", desc: "Served with fries" },
-                { name: "Mega Bairuth Plate", price: "13 QR", desc: "Special platter" },
-                { name: "Arabic Rubiyan Plate", price: "20 QR", desc: "Premium seafood" },
-                { name: "Sheesh Tawook Arabi", price: "13 QR", desc: "Traditional favorite" },
-                { name: "Calzoni Club", price: "17 QR", desc: "Signature calzone" },
-                { name: "Calzoni Combo", price: "14 QR", desc: "Value combo" },
-                { name: "Calzoni Burger", price: "15 QR", desc: "Fusion special" }
-            ],
-            burgers: [
-                { name: "Spanish Spicy Zinker", price: "20 QR", desc: "Signature Spanish flavors", badge: true },
-                { name: "Spanish Combo", price: "15 QR", desc: "Complete meal" },
-                { name: "Spanish Burger", price: "15 QR", desc: "Classic Spanish taste" },
-                { name: "Spanish Club", price: "18 QR", desc: "Premium selection" },
-                { name: "Spanish Twister", price: "15 QR", desc: "Twisted flavors" },
-                { name: "Italian Twister", price: "13 QR", desc: "Italian herbs & spices" },
-                { name: "Italian BMT", price: "13 QR", desc: "Big Meaty Taste" },
-                { name: "Italian Club", price: "17 QR", desc: "Premium Italian" },
-                { name: "Italian Burger", price: "13 QR", desc: "Classic Italian" },
-                { name: "Italian Spicy Burger", price: "14 QR", desc: "With a kick" },
-                { name: "Double Grilled Chicken", price: "20 QR", desc: "Double the flavor" },
-                { name: "Grilled Chicken Burger", price: "15 QR", desc: "Healthy choice" }
-            ],
-            rice: [
-                { name: "Veg Fried Rice", price: "13 QR", desc: "Fresh vegetables" },
-                { name: "Chicken Fried Rice", price: "15 QR", desc: "Tender chicken pieces" },
-                { name: "Prawns Fried Rice", price: "18 QR", desc: "Fresh prawns", badge: true },
-                { name: "Singapore Fried Rice", price: "16 QR", desc: "Asian inspired" },
-                { name: "Chicken Noodles", price: "13 QR", desc: "Wok tossed" },
-                { name: "Beef Noodles", price: "15 QR", desc: "Tender beef strips" },
-                { name: "Mix Noodles", price: "16 QR", desc: "Chicken & beef" },
-                { name: "Singapore Noodles", price: "15 QR", desc: "Curry flavored" },
-                { name: "Nuggets Plate", price: "10 QR", desc: "Crispy & golden" },
-                { name: "Jumbo Prawns", price: "20 QR", desc: "King prawns" },
-                { name: "Chicken Fillet Plate", price: "15 QR", desc: "Juicy fillet" },
-                { name: "Fish Fillet Plate", price: "16 QR", desc: "Fresh fish" },
-                { name: "Kabab Plate", price: "14 QR", desc: "Grilled perfection" },
-                { name: "Spring Roll", price: "8 QR", desc: "Chicken or Veg" },
-                { name: "Cheese Stick Plate", price: "12 QR", desc: "Crispy outside, gooey inside" }
-            ]
-        };
-
-        // DOM Elements
-        const customCursor = document.querySelector('.custom-cursor');
-        const cursorDot = document.querySelector('.cursor-dot');
-        const navbar = document.getElementById('navbar');
-        const menuTabs = document.querySelectorAll('.menu-tab');
-        const menuItemsContainer = document.getElementById('menuItems');
-        const featuredImage = document.getElementById('featuredImage');
-        const featuredName = document.getElementById('featuredName');
-        const featuredDesc = document.getElementById('featuredDesc');
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const reservationForm = document.getElementById('reservationForm');
-        const confirmationModal = document.getElementById('confirmationModal');
-
-        // Initialize
-        let currentCategory = 'juices';
-        let lastScrollY = 0;
-
-        // Custom Cursor
-        if (window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => {
-                if (customCursor && cursorDot) {
-                    customCursor.style.left = e.clientX + 'px';
-                    customCursor.style.top = e.clientY + 'px';
-                    cursorDot.style.left = e.clientX + 'px';
-                    cursorDot.style.top = e.clientY + 'px';
-                }
-            });
-
-            document.querySelectorAll('a, button, .menu-item, .gallery-item').forEach(el => {
-                el.addEventListener('mouseenter', () => customCursor && customCursor.classList.add('hover'));
-                el.addEventListener('mouseleave', () => customCursor && customCursor.classList.remove('hover'));
-            });
-        }
-
-        // Scroll Animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Navbar Background on Scroll
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            
-            if (scrollY > 100) {
-                navbar.style.background = 'rgba(11, 11, 11, 0.95)';
-                navbar.style.backdropFilter = 'blur(20px)';
-                navbar.style.borderBottom = '1px solid var(--border)';
-            } else {
-                navbar.style.background = 'transparent';
-                navbar.style.backdropFilter = 'none';
-                navbar.style.borderBottom = 'none';
-            }
-            
-            lastScrollY = scrollY;
-        });
-
-        // Mobile Menu Toggle
-        if (menuToggle && mobileMenu) {
-            menuToggle.addEventListener('click', () => {
-                const spans = menuToggle.querySelectorAll('span');
-                mobileMenu.classList.toggle('active');
-                
-                if (mobileMenu.classList.contains('active')) {
-                    spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
-                    spans[1].style.opacity = '0';
-                    spans[2].style.transform = 'rotate(-45deg) translate(4px, -4px)';
-                } else {
-                    spans[0].style.transform = 'none';
-                    spans[1].style.opacity = '1';
-                    spans[2].style.transform = 'none';
-                }
-            });
-        }
-
-        // Mobile Links Close
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (mobileMenu) {
-                    mobileMenu.classList.remove('active');
-                    const spans = menuToggle.querySelectorAll('span');
-                    spans[0].style.transform = 'none';
-                    spans[1].style.opacity = '1';
-                    spans[2].style.transform = 'none';
-                }
-            });
-        });
-
-        // Menu Tabs
-        menuTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                menuTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                currentCategory = tab.dataset.category;
-                renderMenu(currentCategory);
-            });
-        });
-
-        // Render Menu
-        function renderMenu(category) {
-            if (!menuItemsContainer || !menuData[category]) return;
-            
-            const items = menuData[category];
-            const images = {
-                juices: 'https://images.unsplash.com/photo-1546173159-315724a31696?w=600&h=600&fit=crop',
-                wraps: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=600&h=600&fit=crop',
-                burgers: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=600&fit=crop',
-                rice: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&h=600&fit=crop'
-            };
-
-            menuItemsContainer.innerHTML = items.map((item, index) => `
-                <div class="menu-item" onmouseenter="updateFeatured('${item.name}', '${item.desc}', '${images[category]}')">
-                    <div class="flex justify-between items-start gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h4 class="item-name font-display tracking-wider transition-colors">${item.name}</h4>
-                                ${item.badge ? '<span class="chef-badge">Chef\'s Choice</span>' : ''}
-                            </div>
-                            <p class="text-[var(--muted)] text-sm">${item.desc}</p>
-                        </div>
-                        <div class="text-[var(--accent)] font-display tracking-wider text-lg">${item.price}</div>
-                    </div>
-                </div>
-            `).join('');
-
-            // Update featured image
-            if (featuredImage && items[0]) {
-                featuredImage.src = images[category];
-                featuredName.textContent = items[0].name;
-                featuredDesc.textContent = items[0].desc;
-            }
-        }
-
-        // Update Featured Item
-        function updateFeatured(name, desc, image) {
-            if (featuredName) featuredName.textContent = name;
-            if (featuredDesc) featuredDesc.textContent = desc;
-            if (featuredImage) featuredImage.src = image;
-        }
-
-        // Lightbox
-        function openLightbox(element) {
-            const img = element.querySelector('img');
-            if (img && lightbox && lightboxImg) {
-                lightboxImg.src = img.src;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeLightbox() {
-            if (lightbox) {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Reservation Form
-        if (reservationForm) {
-            reservationForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                showConfirmation();
-            });
-        }
-
-        function showConfirmation() {
-            if (confirmationModal) {
-                confirmationModal.style.opacity = '1';
-                confirmationModal.style.visibility = 'visible';
-                confirmationModal.querySelector('.glass-card').style.transform = 'scale(1)';
-            }
-        }
-
-        function closeConfirmation() {
-            if (confirmationModal) {
-                confirmationModal.style.opacity = '0';
-                confirmationModal.style.visibility = 'hidden';
-                confirmationModal.querySelector('.glass-card').style.transform = 'scale(0.9)';
-                if (reservationForm) reservationForm.reset();
-            }
-        }
-
-        // Floating Particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            if (!particlesContainer) return;
-            
-            const particleCount = window.innerWidth < 768 ? 20 : 40;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'absolute rounded-full';
-                particle.style.width = Math.random() * 3 + 1 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.background = 'var(--accent)';
-                particle.style.opacity = Math.random() * 0.3 + 0.1;
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animation = `float ${Math.random() * 4 + 4}s ease-in-out infinite`;
-                particle.style.animationDelay = Math.random() * 2 + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderMenu('juices');
-            createParticles();
-        });
-
-        // Keyboard Navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeLightbox();
-                closeConfirmation();
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
+// ============================
+// INIT
+// ============================
+window.addEventListener('scroll',handleHeaderScroll,{passive:true});
+document.addEventListener('DOMContentLoaded',()=>{
+    updateCartBadge();
+    initLoader();
+    if(window.lucide)lucide.createIcons();
+});
+</script>
 </body>
 </html>
